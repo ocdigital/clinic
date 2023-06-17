@@ -17,3 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Events
+Route::get('/events', [App\Http\Controllers\EventController::class, 'index']);
+Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'show']);
+Route::post('/events', [App\Http\Controllers\EventController::class, 'store']);
+Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update']);
+Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
+
+//Pacientes
+Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex']);
+Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
+Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
+Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update']);
+Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy']);
+

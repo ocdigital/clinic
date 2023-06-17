@@ -13,6 +13,12 @@ class EventController extends Controller
         return response()->json($events);
     }
 
+    public function show($id)
+    {
+        $event = Event::find($id);
+        return response()->json($event);
+    }
+
     public function store(Request $request)
     {
        

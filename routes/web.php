@@ -34,6 +34,15 @@ Route::post('/events', [App\Http\Controllers\EventController::class, 'store']);
 Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update']);
 Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
+Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'index'])->name('pacientes.index');
+Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'show'])->name('pacientes.show');
+Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store'])->name('pacientes.store');
+Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('pacientes.update'); 
+Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('pacientes.destroy');
+
+//rota para chamar a view editar paciente
+Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
+
 
 
 

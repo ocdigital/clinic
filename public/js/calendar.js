@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
       navLinks: true,
 
       
-      events: '/',
+      events: '/events',
       editable: true,
       selectable: true,
       selectHelper: true,
@@ -54,34 +54,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
       //Horário de funcionamento do calendário
+      
+    businessHours: [
+    {
+        daysOfWeek: [1],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [1],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    {
+        daysOfWeek: [2],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [2],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    {
+        daysOfWeek: [3],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [3],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    {
+        daysOfWeek: [4],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [4],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    {
+        daysOfWeek: [5],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [5],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    {
+        daysOfWeek: [6],
+        startTime: '08:00',
+        endTime: '12:00'
+    },
+    {
+        daysOfWeek: [6],
+        startTime: '13:00',
+        endTime: '18:00'
+    },
+    ],
 
-      businessHours: [ // specify an array instead
-            {
-                daysOfWeek: [1], 
-                startTime: '08:00', 
-                endTime: '18:00' 
-            },
-            {
-                daysOfWeek: [2], 
-                startTime: '10:00', 
-                endTime: '16:00' 
-            },
-            {
-                daysOfWeek: [3], 
-                startTime: '10:00', 
-                endTime: '16:00' 
-            },
-            {
-                daysOfWeek: [4], 
-                startTime: '10:00', 
-                endTime: '16:00' 
-            },
-            {
-                daysOfWeek: [5], 
-                startTime: '10:00', 
-                endTime: '16:00' 
-            },
-        ],        
+ 
 
       headerToolbar: {
         left: 'prev,next today',
@@ -90,35 +127,42 @@ document.addEventListener('DOMContentLoaded', function() {
       },
 
       //Click Date
-      dateClick: function (date, jsEvent, view) {
-        console.log(date);
-        $('#popup').dialog({
-            title: 'Novo Evento',
-            modal: true,                      
-            buttons: {
-                Salvar: function () {
-                    var name = $('#name').val();
-                    var phone = $('#phone').val();
-                    var eventData = {
-                        title: name,
-                        start: moment(date.dateStr).format('YYYY-MM-DD HH:mm'),
-                        end: moment(date.dateStr).format('YYYY-MM-DD HH:mm')
-                    };
-                    createEvent(eventData);
-                    $(this).dialog('close');
+      dateClick: function (date, jsEvent, view) {    
+        //extrair somente o horario do dia selecionado
+        var time = moment(date.dateStr).format('HH:mm');
+        //se horario estiver entre 12:00 e 13:00
+        if(time >= '12:00' && time <= '13:00'){
+           
+        }
+        else{
+            $('#popup').dialog({
+                title: 'Novo Evento',
+                modal: true,                      
+                buttons: {
+                    Salvar: function () {
+                        var name = $('#name').val();
+                        var phone = $('#phone').val();
+                        var eventData = {
+                            title: name,
+                            start: moment(date.dateStr).format('YYYY-MM-DD HH:mm'),
+                            end: moment(date.dateStr).format('YYYY-MM-DD HH:mm')
+                        };
+                        createEvent(eventData);
+                        $(this).dialog('close');
+                    },
+                    Cancelar: function () {
+                        $(this).dialog('close');
+                    }
                 },
-                Cancelar: function () {
-                    $(this).dialog('close');
+                open: function () {
+                    $('#name').val('');
+                    $('#phone').val('');
                 }
-            },
-            open: function () {
-                $('#name').val('');
-                $('#phone').val('');
-            }
-        });
-    },//Fecha o dateClick
-    eventClick: function (event, jsEvent, view) {    
-        console.log(event);       
+            });
+        }
+        },
+      
+    eventClick: function (event, jsEvent, view) {  
         $('#popup').dialog({
             title: 'Editar Evento',
             modal: true,
@@ -172,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateEvent(eventData);
     },//Fecha o eventResize
 });//Fecha o calendário
+
 
 
 function createEvent(eventData) {

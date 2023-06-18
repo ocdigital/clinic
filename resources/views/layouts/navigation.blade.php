@@ -16,10 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
-                        {{ __('Calendar') }}
+                        {{ __('Agenda') }}
                     </x-nav-link>
                     <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
-                        {{ __('Pacientes') }}
+                        {{ __('Prontuários') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
+                        {{ __('Clínica') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
+                        {{ __('Profissionais') }}
                     </x-nav-link>
                 </div>
             </div>

@@ -29,6 +29,6 @@ Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'des
 Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex']);
 Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
 Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
-Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update']);
-Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy']);
+Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);
+Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUdestroy']);
 

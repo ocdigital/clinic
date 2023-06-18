@@ -104,6 +104,8 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
+
+    //atualizar um paciente e retroceder para a view de listagem de pacientes
     public function update(Request $request, $id)
     {
             $paciente = Paciente::find($id);
@@ -115,8 +117,31 @@ class PacienteController extends Controller
             $paciente->telefone = $request->telefone;
             $paciente->email = $request->email;
             $paciente->save();
+
+            return redirect()->route('pacientes.index')->with('message','Paciente atualizado com sucesso');
+
+            
+
+
     
-            return response()->json($paciente);
+    }
+
+    //update para api  
+    public function apiUpdate(Request $request, $id)
+    {
+        $paciente = Paciente::find($id);
+        if(!$paciente){
+            return response()->json(['message' => 'Paciente não encontrado'], 404);
+        }  
+        $paciente->nome = $request->nome;
+        $paciente->data_nascimento = $request->data_nascimento;
+        $paciente->sexo = $request->sexo;
+        $paciente->endereco = $request->endereco;
+        $paciente->telefone = $request->telefone;
+        $paciente->email = $request->email;
+        $paciente->save();
+
+        return response()->json($paciente);
     }
 
     /**
@@ -125,9 +150,23 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
+
+     //retornar para listagem de pacientes
     public function destroy($id)
     {           
         $paciente = Paciente::find($id);
+        $paciente->delete();    
+
+        return redirect()->route('pacientes.index')->with('message','Paciente deletado com sucesso');
+    }
+
+    //deletar um paciente e retroceder para a view de listagem de pacientes
+    public function apiDestroy($id)
+    {
+        $paciente = Paciente::find($id);
+        if(!$paciente){
+            return response()->json(['message' => 'Paciente não encontrado'], 404);
+        }  
         $paciente->delete();    
         return response()->json(['message' => 'Paciente deletado com sucesso']);
     }

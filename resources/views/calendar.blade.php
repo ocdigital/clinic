@@ -1,5 +1,5 @@
 <x-app-layout>
- 
+
     <div class="col-12 auto">
         <div id='calendar'></div>
     </div>

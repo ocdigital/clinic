@@ -181,6 +181,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Typesense\LaravelTypesense\TypesenseServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
 
         /*
          * Package Service Providers...

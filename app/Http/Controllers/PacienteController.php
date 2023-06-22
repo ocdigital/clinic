@@ -13,16 +13,44 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $pacientes=Paciente::all();
-        return view('pacientes.index',compact('pacientes'));
+        $query = Paciente::query();
+
+        // Filtrar por nome
+        if ($request->filled('nome')) {
+            $query->where('nome', 'like', '%' . $request->input('nome') . '%');
+        }
+    
+        // Filtrar por sexo
+        if ($request->filled('sexo')) {
+            $query->where('sexo', $request->input('sexo'));
+        }
+    
+        // Filtrar por email
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+    
+        // Ordenar os resultados
+        $orderColumn = $request->input('order_by', 'nome'); // Coluna padrão para ordenação é 'nome'
+        $orderDirection = $request->input('order_direction', 'asc'); // Direção padrão é ascendente
+    
+        $query->orderBy($orderColumn, $orderDirection);
+    
+        $pacientes = $query->paginate(10);
+
+        $message = $request->session()->get('message');
+
+        return view('pacientes.index', compact('pacientes', 'message'));
     }
 
     //retornar todas os pacientes para um endpoint da API
     public function apiIndex()
     {
-        $pacientes=Paciente::all();
+
+        $pacientes=Paciente::paginate(2);
+
         return response()->json($pacientes);
     }
 
@@ -118,11 +146,10 @@ class PacienteController extends Controller
             $paciente->email = $request->email;
             $paciente->save();
 
-            return redirect()->route('pacientes.index')->with('message','Paciente atualizado com sucesso');
+            // Definir a mensagem de sucesso
+    $message = 'Paciente atualizado com sucesso';
 
-            
-
-
+    return redirect()->route('pacientes.index')->with('message', $message);
     
     }
 
@@ -169,5 +196,13 @@ class PacienteController extends Controller
         }  
         $paciente->delete();    
         return response()->json(['message' => 'Paciente deletado com sucesso']);
+    }
+
+    //criar uma api para buscar um paciente utilizando o typesense
+    public function apiSearch($nome)
+    {
+        $paciente = Paciente::search($nome)->get();
+
+        return response()->json($paciente);
     }
 }

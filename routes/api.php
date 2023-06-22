@@ -31,4 +31,5 @@ Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, '
 Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
 Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);
 Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUdestroy']);
+Route::get('/pacientes/search/{nome}', [App\Http\Controllers\PacienteController::class, 'apiSearch']);
 

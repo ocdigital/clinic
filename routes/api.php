@@ -18,6 +18,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/auth/register', [App\Http\Controllers\Api\AuthController::class, 'createUser']);
+Route::post('/auth/login', [App\Http\Controllers\Api\AuthController::class, 'loginUser']);
+
 //Events
 Route::get('/events', [App\Http\Controllers\EventController::class, 'index']);
 Route::get('/events/{id}', [App\Http\Controllers\EventController::class, 'show']);
@@ -26,7 +29,7 @@ Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update
 Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
 //Pacientes
-Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex']);
+Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex'])->middleware('auth:sanctum');
 Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
 Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
 Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);

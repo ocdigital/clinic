@@ -206,12 +206,13 @@ document.addEventListener('DOMContentLoaded', function() {
     },//Fecha o eventDrop
 
     eventResize: function (event, delta, revertFunc) {
+        console.log(event);
         var eventData = {
             id: event.id,
             id: event['event']['id'],
             title: event['event']['title'],
             start:moment(event['event']['start']).format('YYYY-MM-DD HH:mm'),
-            end: moment(event['event']['start']).format('YYYY-MM-DD HH:mm'),
+            end: moment(event['event']['end']).format('YYYY-MM-DD HH:mm'),
         };
         updateEvent(eventData);
     },//Fecha o eventResize

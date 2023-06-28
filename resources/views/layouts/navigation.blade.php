@@ -27,6 +27,10 @@
                     <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
                         {{ __('Profissionais') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Usuários') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 

@@ -1,12 +1,5 @@
 <x-app-layout>
 
-  <!-- Arquivos CSS do SweetAlert2 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
-
-<!-- Arquivos JavaScript do SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
-
-
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
   <form action="{{ route('pacientes.index') }}" method="GET" class="mb-4">
     <div class="flex">

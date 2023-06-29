@@ -13,6 +13,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified']);
 
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

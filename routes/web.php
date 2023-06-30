@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::get('/calendar', function () {
     return view('calendar');
 })->middleware(['auth', 'verified'])->name('calendar');
@@ -16,6 +17,12 @@ Route::get('/dashboard', function () {
 Route::get('/admin', function () {
     return view('admin.index');
 })->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
+
+Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group(function () {
+    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
+});
 
 Route::get('/', function () {
     return view('dashboard');

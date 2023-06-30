@@ -5,92 +5,16 @@
                 <div class="p-6 text-gray-900">
                     {{ __("Administrator") }}
                 </div>
-                <div class="simplebar-content" style="padding: 16px;">
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <i class="las la-user-clock bg-primary-600/5 text-primary-500 border-white dark:border-slate-800 border-solid border-2 rounded-full flex items-center justify-center h-8 text-lg ml-px w-8 shadow-[0_0_1px_0.25px_rgba(0,0,0,0.6)] dark:shadow-[0_0_1px_0.25px_rgba(225,225,225,0.7)]"></i>
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400  w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Donald</span> 
-                                        updated the status of <a href="" class="text-slate-600 dark:text-slate-300">Refund #1234</a> to awaiting customer response
-                                </p>
-                                <small class="text-slate-400 text-xs">10 Min ago</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <i class="mdi mdi-timer-off bg-primary-600/5 text-primary-500 border-white dark:border-slate-800 border-solid border-2 rounded-full flex items-center justify-center h-8 text-lg ml-px w-8 shadow-[0_0_1px_0.25px_rgba(0,0,0,0.6)] dark:shadow-[0_0_1px_0.25px_rgba(225,225,225,0.7)]"></i>
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400 w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Lucy Peterson</span> 
-                                    was added to the group, group name is <a href="" class="text-slate-600 dark:text-slate-300">Overtake</a>
-                                </p>
-                                <small class="text-slate-400 text-xs">50 Min ago</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <img src="assets/images/users/avatar-7.jpg" alt="" class="rounded-full h-8 w-8 flex items-center justify-center ml-px">
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400 w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Joseph Rust</span> 
-                                    opened new showcase <a href="" class="text-slate-600 dark:text-slate-300">Mannat #112233</a> with theme market
-                                </p>
-                                <small class="text-slate-400 text-xs">01h ago</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <i class="mdi mdi-clock-outline bg-primary-600/5 text-primary-500 border-white dark:border-slate-800 border-solid border-2 rounded-full flex items-center justify-center h-8 text-lg ml-px w-8 shadow-[0_0_1px_0.25px_rgba(0,0,0,0.6)] dark:shadow-[0_0_1px_0.25px_rgba(225,225,225,0.7)]"></i>
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400 w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Donald</span> 
-                                        updated the status of <a href="" class="text-slate-600 dark:text-slate-300">Refund #1234</a> to awaiting customer response
-                                </p>
-                                <small class="text-slate-400 text-xs">yesterday</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <i class="mdi mdi-alert-outline bg-primary-600/5 text-primary-500 border-white dark:border-slate-800 border-solid border-2 rounded-full flex items-center justify-center h-8 text-lg ml-px w-8 shadow-[0_0_1px_0.25px_rgba(0,0,0,0.6)] dark:shadow-[0_0_1px_0.25px_rgba(225,225,225,0.7)]"></i>
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400 w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Lucy Peterson</span> 
-                                    was added to the group, group name is <a href="" class="text-slate-600 dark:text-slate-300">Overtake</a>
-                                </p>
-                                <small class="text-slate-400 text-xs">14 Nov 2022</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex my-1 relative min-h-[60px] before:absolute before:bottom-0 before:top-[38px] before:left-[16px] before:border-l-2 before:border-slate-200 dark:before:border-slate-700 before:border-dotted">
-                        <div class="">
-                            <img src="assets/images/users/avatar-8.jpg" alt="" class="rounded-full h-8 w-8 flex items-center justify-center ml-px">
-                        </div>
-                        <div class="ml-4 w-full">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-slate-400 w-3/4">
-                                    <span class="text-slate-600 dark:text-slate-300">Joseph Rust</span> 
-                                    opened new showcase <a href="" class="text-slate-600 dark:text-slate-300">Mannat #112233</a> with theme market
-                                </p>
-                                <small class="text-slate-400 text-xs">15 Nov 2022</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
+<button type="button" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Alternative</button>
+<button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Dark</button>
+<button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Light</button>
+<button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Green</button>
+<button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Red</button>
+<button type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Yellow</button>
+<button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Purple</button>
+
             </div>
         </div>
     </div>

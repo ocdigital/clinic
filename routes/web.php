@@ -3,20 +3,26 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+
 
 Route::get('/calendar', function () {
     return view('calendar');
 })->middleware(['auth', 'verified'])->name('calendar');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified']);
+
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
+
+Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group(function () {
+    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
+});
 
 Route::get('/', function () {
     return view('dashboard');
@@ -42,6 +48,12 @@ Route::middleware('auth')->group(function () {
 
     //rota para chamar a view editar paciente
     Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
+
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->middleware('auth')->name('users.index');
+    Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->middleware('auth')->name('users.edit');
+    Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->middleware('auth');
+    Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth')->name('users.destroy');
+
 });
 
 

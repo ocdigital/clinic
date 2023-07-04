@@ -3,6 +3,9 @@
         @if (isset($message))
         <div class="bg-green-200 text-green-800 px-4 py-2 mb-4">{{ $message }}</div>
         @endif
+        <div class="flex justify-end p-2">                
+            <a href="{{ route('admin.users.create')}}" class="px-4 py-2 bg-green-500 hover:bg-green-300 rounded-md">Create</a>              
+        </div>
         <table class="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr>

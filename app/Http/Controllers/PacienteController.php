@@ -45,14 +45,14 @@ class PacienteController extends Controller
         return view('pacientes.index', compact('pacientes', 'message'));
     }
 
-    //retornar todas os pacientes para um endpoint da API
-    public function apiIndex()
-    {
+    // //retornar todas os pacientes para um endpoint da API
+    // public function apiIndex()
+    // {
 
-        $pacientes=Paciente::paginate(2);
+    //     $pacientes=Paciente::paginate(2);
 
-        return response()->json($pacientes);
-    }
+    //     return response()->json($pacientes);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +62,8 @@ class PacienteController extends Controller
 
     public function create()
     {
-        return view('pacientes.create');
+
+        return view('pacientes.createOrUpdate');
     }
 
     /**
@@ -74,6 +75,16 @@ class PacienteController extends Controller
     //criar um novo paciente
     public function store(Request $request)
     {
+        //validação dos dados
+        $request->validate([
+            'nome' => 'required',
+            'data_nascimento' => 'required',
+            'sexo' => 'required',
+            'endereco' => 'required',
+            'telefone' => 'required',
+            'email' => 'required',
+        ]);
+        
         $paciente = new Paciente;
         $paciente->nome = $request->nome;
         $paciente->data_nascimento = $request->data_nascimento;
@@ -83,7 +94,9 @@ class PacienteController extends Controller
         $paciente->email = $request->email;
         $paciente->save();
 
-        return response()->json($paciente);
+
+
+        return redirect()->route('pacientes.index')->with('message', 'Paciente criado com sucesso!');
         
     }
 
@@ -94,19 +107,21 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {                
-            return view('pacientes.show',compact('paciente'));
+    {       
+        // dd('show');         
+            $paciente = Paciente::find($id);
+            return view('pacientes.createOrUpdate',compact('paciente'));
     }
 
-    //retornar um paciente específico para um endpoint da API
-    public function apiShow($id)
-    {
-        $paciente = Paciente::find($id);          
-        if(!$paciente){
-            return response()->json(['message' => 'Paciente não encontrado'], 404);
-        }  
-        return response()->json($paciente);
-    }
+    // //retornar um paciente específico para um endpoint da API
+    // public function apiShow($id)
+    // {
+    //     $paciente = Paciente::find($id);          
+    //     if(!$paciente){
+    //         return response()->json(['message' => 'Paciente não encontrado'], 404);
+    //     }  
+    //     return response()->json($paciente);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -153,23 +168,23 @@ class PacienteController extends Controller
     
     }
 
-    //update para api  
-    public function apiUpdate(Request $request, $id)
-    {
-        $paciente = Paciente::find($id);
-        if(!$paciente){
-            return response()->json(['message' => 'Paciente não encontrado'], 404);
-        }  
-        $paciente->nome = $request->nome;
-        $paciente->data_nascimento = $request->data_nascimento;
-        $paciente->sexo = $request->sexo;
-        $paciente->endereco = $request->endereco;
-        $paciente->telefone = $request->telefone;
-        $paciente->email = $request->email;
-        $paciente->save();
+    // //update para api  
+    // public function apiUpdate(Request $request, $id)
+    // {
+    //     $paciente = Paciente::find($id);
+    //     if(!$paciente){
+    //         return response()->json(['message' => 'Paciente não encontrado'], 404);
+    //     }  
+    //     $paciente->nome = $request->nome;
+    //     $paciente->data_nascimento = $request->data_nascimento;
+    //     $paciente->sexo = $request->sexo;
+    //     $paciente->endereco = $request->endereco;
+    //     $paciente->telefone = $request->telefone;
+    //     $paciente->email = $request->email;
+    //     $paciente->save();
 
-        return response()->json($paciente);
-    }
+    //     return response()->json($paciente);
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -187,22 +202,23 @@ class PacienteController extends Controller
         return redirect()->route('pacientes.index')->with('message','Paciente deletado com sucesso');
     }
 
-    //deletar um paciente e retroceder para a view de listagem de pacientes
-    public function apiDestroy($id)
-    {
-        $paciente = Paciente::find($id);
-        if(!$paciente){
-            return response()->json(['message' => 'Paciente não encontrado'], 404);
-        }  
-        $paciente->delete();    
-        return response()->json(['message' => 'Paciente deletado com sucesso']);
-    }
+    // //deletar um paciente e retroceder para a view de listagem de pacientes
+    // public function apiDestroy($id)
+    // {
+    //     $paciente = Paciente::find($id);
+    //     if(!$paciente){
+    //         return response()->json(['message' => 'Paciente não encontrado'], 404);
+    //     }  
+    //     $paciente->delete();    
+    //     return response()->json(['message' => 'Paciente deletado com sucesso']);
+    // }
 
-    //criar uma api para buscar um paciente utilizando o typesense
-    public function apiSearch($nome)
-    {
-        $paciente = Paciente::search($nome)->get();
+//     //criar uma api para buscar um paciente utilizando o typesense
+//     public function apiSearch($nome)
+//     {
+//         $paciente = Paciente::search($nome)->get();
 
-        return response()->json($paciente);
-    }
+//         return response()->json($paciente);
+//     }
+// 
 }

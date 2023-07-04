@@ -17,6 +17,39 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    //create
+    public function create()
+    {
+        return view('admin.users.createOrUpdate');
+    }
+
+    //edit
+    public function edit(User $user)
+    {   
+        return view('admin.users.createOrUpdate', compact('user'));
+    }
+
+    //store
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+    
+        try {
+            $user = User::create($request->all()); // Inclui todos os campos, incluindo "password"
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return redirect()->route('admin.users.index')->with('message', 'User created.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+    
+    
+
     public function show(User $user)
     {
         $roles = Role::all();
@@ -24,6 +57,8 @@ class UserController extends Controller
 
         return view('admin.users.role', compact('user', 'roles', 'permissions'));
     }
+
+
 
     public function assignRole(Request $request, User $user)
     {
@@ -71,5 +106,9 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('message', 'User deleted.');
+    }
+
+    public function test(){
+        dd('teste');
     }
 }

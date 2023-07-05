@@ -43,9 +43,9 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::post('/users/{user}/permissions', [App\Http\Controllers\Admin\UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [App\Http\Controllers\Admin\UserController::class, 'revokePermission'])->name('users.permissions.revoke');
     Route::get('/users/test', [App\Http\Controllers\Admin\UserController::class, 'test'])->name('users.test');
-   
-
-
+    
+    Route::resource('/convenios', App\Http\Controllers\Admin\ConvenioController::class);
+    Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);
 
 });
 
@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
 
     //rota para chamar a view editar paciente
     Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
+
 
 
 });

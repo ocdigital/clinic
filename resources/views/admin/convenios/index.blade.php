@@ -56,7 +56,7 @@
 </x-admin-layout>
 
 <!-- Modal -->
-<div id="deleteModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+<div id="deleteModal" class="fixed inset-0 flex items-center justify-center z-50">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
         <h2 class="text-xl font-bold mb-4">Confirmar exclusão</h2>
         <p class="mb-4">Tem certeza que deseja deletar?</p>

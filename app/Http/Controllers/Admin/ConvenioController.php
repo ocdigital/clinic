@@ -137,6 +137,14 @@ class ConvenioController extends Controller
      */
     public function destroy(Convenio $convenio)
     {
-        //
+        try{
+        $convenio->delete();
+
+        return redirect()->route('admin.convenios.index')->with('message', 'Convenio deletado com sucesso!');
+        }
+        catch(\Exception $e){
+            return redirect()->route('admin.convenios.index')->with('message', 'Não foi possível deletar o convenio, pois existem planos associados a ele!');
+        }
+
     }
 }

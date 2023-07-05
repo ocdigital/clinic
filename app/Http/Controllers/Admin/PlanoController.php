@@ -39,6 +39,11 @@ class PlanoController extends Controller
         $plano->nome = $request->nome;
         $plano->convenio_id = $request->convenio_id;
         $plano->save();
+
+        //retorne sucesso para o ajax
+        return response()->json([
+            'success' => 'Plano adicionado com sucesso!'
+        ]);
     }
 
     /**
@@ -72,7 +77,6 @@ class PlanoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('chegou');
         // Validação dos dados do convênio
         $request->validate([
             'registro' => 'required',

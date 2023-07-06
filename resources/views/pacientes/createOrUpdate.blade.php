@@ -1,58 +1,165 @@
 <x-app-layout>
-  <div class="container mx-auto">
-      <div class="flex justify-center">
-          <div class="w-3/4">
-              <div class="bg-white shadow-md rounded-lg">
-                  <div class="bg-gray-200 text-gray-800 px-6 py-4">{{ isset($paciente) ? 'Editar Paciente' : 'Criar Paciente' }}</div>
+    <div class="container mx-auto">
+        <div class="flex justify-center">
+            <div class="w-3/4">
+                <div class="bg-white shadow-md rounded-lg">
+                    <div class="bg-gray-200 text-gray-800 px-6 py-4">
+                        {{ isset($paciente) ? 'Editar Paciente' : 'Criar Paciente' }}</div>
 
-                  <div class="p-6">
-                      <form action="{{ isset($paciente) ? route('pacientes.update', $paciente->id) : route('pacientes.store') }}" method="POST">
-                          @csrf <!-- Adicione isso para proteção contra ataques CSRF -->
+                    <div class="p-6">
+                        @if (isset($paciente))
+                            <form action="{{ route('pacientes.update', $paciente->id) }}" method="POST">
+                                @method('PUT')
+                            @else
+                                <form action="{{ route('pacientes.store') }}" method="POST">
+                        @endif
+                        @csrf
+                        <!-- Dados Principais -->
+                        <div class="mb-4">
+                            <h2 class="text-xl font-semibold mb-2">Dados Principais</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="nome" class="block mb-2">Nome:</label>
+                                    <input type="text" name="nome" id="nome"
+                                        class="w-full px-4 py-2 border rounded @error('nome') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->nome : '' }}">
+                                    @error('nome')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="data_nascimento" class="block mb-2">Data de Nascimento:</label>
+                                    <input type="date" name="data_nascimento" id="data_nascimento"
+                                        class="w-full px-4 py-2 border rounded @error('data_nascimento') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->data_nascimento : '' }}">
+                                    @error('data_nascimento')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <!--endereço-->
+                                <div>
+                                    <label for="endereco" class="block mb-2">Endereço:</label>
+                                    <input type="text" name="endereco" id="endereco"
+                                        class="w-full px-4 py-2 border rounded @error('endereco') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->endereco : '' }}">
+                                    @error('endereco')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <!--telefone-->
+                                <div>
+                                    <label for="telefone" class="block mb-2">Telefone:</label>
+                                    <input type="text" name="telefone" id="telefone"
+                                        class="w-full px-4 py-2 border rounded @error('telefone') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->telefone : '' }}">
+                                    @error('telefone')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <!-- campo sexo -->
+                                <div>
+                                    <label for="sexo" class="block mb-2">Sexo:</label>
+                                    <select name="sexo" id="sexo" class="w-full px-4 py-2 border rounded" onchange="showOthersexoField()">
+                                        <option value="masculino" {{ isset($paciente) && $paciente->sexo === 'masculino' ? 'selected' : '' }}>Masculino</option>
+                                        <option value="feminino" {{ isset($paciente) && $paciente->sexo === 'feminino' ? 'selected' : '' }}>Feminino</option>
+                                        <option value="outro" {{ isset($paciente) && $paciente->sexo === 'outro' ? 'selected' : '' }}>Outro</option>
+                                    </select>
+                                </div>
+                                @if(isset($paciente) && $paciente->sexo === 'outro')
+                                    <div id="othersexoField" style="display:block">
+                                        <label for="othersexo" class="block mb-2">Outro Sexo:</label>
+                                        <input type="text" name="othersexo" id="othersexo" class="w-full px-4 py-2 border rounded" value="{{ isset($paciente) ? $paciente->othersexo : '' }}">
+                                    </div>
+                                @else
+                                    <div id="othersexoField" style="display:none">
+                                        <label for="othersexo" class="block mb-2">Outro Sexo:</label>
+                                        <input type="text" name="othersexo" id="othersexo" class="w-full px-4 py-2 border rounded">
+                                    </div>
+                                @endif
+                                @error('othersexo')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
 
-                          @if(isset($paciente))
-                              @method('PUT') <!-- ou @method('PATCH') para usar o método PATCH -->
-                          @else
-                              @method('POST')
-                          @endif
+                                <div>
+                                    <label for="email" class="block mb-2">E-mail:</label>
+                                    <input type="email" name="email" id="email"
+                                        class="w-full px-4 py-2 border rounded @error('email') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->email : '' }}">
+                                    @error('email')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>                        
+                                <!-- Outros campos principais -->
+                            </div>
+                        </div>
 
-                          <div class="mb-4">
-                              <label for="nome" class="block text-gray-700 font-bold mb-2">Nome:</label>
-                              <input type="text" id="nome" name="nome" value="{{ isset($paciente) ? $paciente->nome : old('nome') }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                          </div>
+                        <!-- Dados Complementares -->
+                        <div class="mb-4">
+                            <h2 class="text-xl font-semibold mb-2">Dados Complementares</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="address" class="block mb-2">Endereço:</label>
+                                    <input type="text" name="address" id="address"
+                                        class="w-full px-4 py-2 border rounded @error('address') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->address : '' }}">
+                                    @error('address')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="occupation" class="block mb-2">Profissão:</label>
+                                    <input type="text" name="occupation" id="occupation"
+                                        class="w-full px-4 py-2 border rounded @error('occupation') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->occupation : '' }}">
+                                    @error('occupation')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="height" class="block mb-2">Altura:</label>
+                                    <input type="text" name="height" id="height"
+                                        class="w-full px-4 py-2 border rounded @error('height') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->height : '' }}">
+                                    @error('height')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="weight" class="block mb-2">Peso:</label>
+                                    <input type="text" name="weight" id="weight"
+                                        class="w-full px-4 py-2 border rounded @error('weight') border-red-500 @enderror"
+                                        value="{{ isset($paciente) ? $paciente->weight : '' }}">
+                                    @error('weight')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <!-- Outros campos complementares -->
+                            </div>
+                        </div>
 
-                          <div class="mb-4">
-                              <label for="data_nascimento" class="block text-gray-700 font-bold mb-2">Data de Nascimento:</label>
-                              <input type="date" id="data_nascimento" name="data_nascimento" value="{{ isset($paciente) ? $paciente->data_nascimento : old('data_nascimento') }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                          </div>
+                      
 
-                          <div class="mb-4">
-                              <label for="sexo" class="block text-gray-700 font-bold mb-2">Sexo:</label>
-                              <select id="sexo" name="sexo" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                                  <option value="Masculino" {{ isset($paciente) && $paciente->sexo === 'Masculino' ? 'selected' : '' }}>Masculino</option>
-                                  <option value="Feminino" {{ isset($paciente) && $paciente->sexo === 'Feminino' ? 'selected' : '' }}>Feminino</option>
-                              </select>
-                          </div>
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Salvar</button>
+                        </form>
 
-                          <div class="mb-4">
-                              <label for="endereco" class="block text-gray-700 font-bold mb-2">Endereço:</label>
-                              <input type="text" id="endereco" name="endereco" value="{{ isset($paciente) ? $paciente->endereco : old('endereco') }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                          <div class="mb-4">
-                              <label for="telefone" class="block text-gray-700 font-bold mb-2">Telefone:</label>
-                              <input type="tel" id="telefone" name="telefone" value="{{ isset($paciente) ? $paciente->telefone : old('telefone') }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                          </div>
-
-                          <div class="mb-4">
-                              <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
-                              <input type="email" id="email" name="email" value="{{ isset($paciente) ? $paciente->email : old('email') }}" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500">
-                          </div>
-
-                          <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <script>
+        function showOthersexoField() {
+            var sexoSelect = document.getElementById('sexo');
+            var othersexoField = document.getElementById('othersexoField');
+    
+            if (sexoSelect.value === 'outro') {
+                othersexoField.style.display = 'block';
+            } else {
+                othersexoField.style.display = 'none';
+            }
+        }
+    </script>
 </x-app-layout>

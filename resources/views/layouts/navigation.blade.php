@@ -17,19 +17,13 @@
                     </x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Agenda') }}
-                    </x-nav-link>
+                    </x-nav-link>                    
                     <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
-                        {{ __('Prontuários') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
-                        {{ __('Clínica') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
-                        {{ __('Profissionais') }}
+                        {{ __('Pacientes') }}
                     </x-nav-link>
                     @role('admin')
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('Usuários') }}
+                    <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                        {{ __('Admin') }}
                     </x-nav-link>
                     @endrole
 

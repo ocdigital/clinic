@@ -19,10 +19,37 @@ Route::get('/admin', function () {
 })->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
 
 Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group(function () {
-    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+
     Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::post('/roles/{role}/permissions', [App\Http\Controllers\Admin\RoleController::class, 'givePermission'])->name('roles.permissions');
+    Route::delete('/roles/{role}/permissions/{permission}', [App\Http\Controllers\Admin\RoleController::class, 'revokePermission'])->name('roles.permissions.revoke');
+    // Route::delete('/roles/{role}/permissions/{permission}', [App\Http\Controllers\Admin\RoleController::class, 'revokePermission'])->name('roles.permissions.roles.remove');
+    
     Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
+    Route::post('/permissions/{permission}/roles', [App\Http\Controllers\Admin\PermissionController::class, 'assignRole'])->name('permissions.roles');
+    Route::delete('/permissions/{permission}/roles/{role}', [App\Http\Controllers\Admin\PermissionController::class, 'removeRole'])->name('permissions.roles.remove');
+
+    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
+
+    Route::patch('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('users.update');
+
+   
+    Route::get('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('users.show');
+    Route::delete('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+    Route::post('/users/{user}/roles', [App\Http\Controllers\Admin\UserController::class, 'assignRole'])->name('users.roles');
+    Route::delete('/users/{user}/roles/{role}', [App\Http\Controllers\Admin\UserController::class, 'removeRole'])->name('users.roles.remove');
+    Route::post('/users/{user}/permissions', [App\Http\Controllers\Admin\UserController::class, 'givePermission'])->name('users.permissions');
+    Route::delete('/users/{user}/permissions/{permission}', [App\Http\Controllers\Admin\UserController::class, 'revokePermission'])->name('users.permissions.revoke');
+    Route::get('/users/test', [App\Http\Controllers\Admin\UserController::class, 'test'])->name('users.test');
+    
+    Route::resource('/convenios', App\Http\Controllers\Admin\ConvenioController::class);
+    Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);
+
 });
+
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -45,14 +72,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store'])->name('pacientes.store');
     Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('pacientes.update'); 
     Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('pacientes.destroy');
+    //criar novo paciente
+    Route::get('/pacientes/create', [App\Http\Controllers\PacienteController::class, 'create'])->name('pacientes.create');
 
     //rota para chamar a view editar paciente
     Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
 
-    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->middleware('auth')->name('users.index');
-    Route::get('/users/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->middleware('auth')->name('users.edit');
-    Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->middleware('auth');
-    Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->middleware('auth')->name('users.destroy');
+
 
 });
 

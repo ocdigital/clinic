@@ -28,11 +28,11 @@ Route::post('/events', [App\Http\Controllers\EventController::class, 'store']);
 Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update']);
 Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
-//Pacientes
-Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex'])->middleware('auth:sanctum');
-Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
-Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
-Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);
-Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUdestroy']);
-Route::get('/pacientes/search/{nome}', [App\Http\Controllers\PacienteController::class, 'apiSearch']);
+// //Pacientes
+// Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex'])->middleware('auth:sanctum');
+// Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
+// Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
+// Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);
+// Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUdestroy']);
+// Route::get('/pacientes/search/{nome}', [App\Http\Controllers\PacienteController::class, 'apiSearch']);
 

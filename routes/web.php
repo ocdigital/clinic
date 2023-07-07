@@ -47,6 +47,8 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::resource('/convenios', App\Http\Controllers\Admin\ConvenioController::class);
     Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);
 
+    Route::resource('/agenda', App\Http\Controllers\Admin\AgendaController::class);
+
 });
 
 

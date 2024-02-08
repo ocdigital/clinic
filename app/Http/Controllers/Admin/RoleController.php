@@ -12,9 +12,12 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::whereNotIn('name', ['admin'])->get();
+        // $roles = Role::whereNotIn('name', ['admin'])->get();
+        $roles = Role::all();
+        // dd($roles);
         return view('admin.roles.index', compact('roles'));
-       
+
+
     }
 
     public function create()
@@ -75,7 +78,7 @@ class RoleController extends Controller
     }
 
     public function givePermission(Request $request, Role $role){
-        
+
         $role->givePermissionTo($request->permissions);
         return redirect()->back()->with('message', 'Permissão atribuída com sucesso!');
 
@@ -84,7 +87,7 @@ class RoleController extends Controller
     }
 
     public function revokePermission(Role $role, Permission $permission){
-        
+
         $role->revokePermissionTo($permission);
         return redirect()->back()->with('message', 'Permissão removida com sucesso!');
     }

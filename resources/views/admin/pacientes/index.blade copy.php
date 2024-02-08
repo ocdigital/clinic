@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                   <div class="flex justify-between mb-4 mt-4">
-                    <form action="{{ route('pacientes.index') }}" method="GET" class="flex">
+                    <form action="{{ route('admin.pacientes.index') }}" method="GET" class="flex">
                         <div class="mr-2">
                             <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
                             <input type="text" name="nome" id="nome" value="{{ request()->input('nome') }}"
@@ -26,16 +26,16 @@
                             <input type="email" name="email" id="email" value="{{ request()->input('email') }}"
                                 class="px-4 py-2 rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300">
                         </div>
-                      
+
                             <button type="submit"
                                 class="px-4  bg-indigo-500 hover:bg-indigo-600 text-white font-bold rounded">Filtrar</button>
-      
+
                     </form>
-                
-                    <a href="{{ route('pacientes.create') }}"
+
+                    <a href="{{ route('admin.pacientes.create') }}"
                         class="px-4 py-2 bg-green-500 hover:bg-green-300 rounded-md self-center">Create</a>
                 </div>
-                
+
                     <div class="mb-6">
                        <table class="min-w-full bg-white border border-gray-200">
                             <thead>
@@ -59,10 +59,10 @@
                                         <td class="py-3 px-4">{{ $paciente->email }}</td>
                                         <td class="py-3 px-4">
                                             <div class="flex">
-                                                <a href="{{ route('pacientes.edit', $paciente->id) }}"
+                                                <a href="{{ route('admin.pacientes.edit', $paciente->id) }}"
                                                     class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2">Editar</a>
                                                 <form id="deleteForm{{ $paciente->id }}"
-                                                    action="{{ route('pacientes.destroy', $paciente->id) }}"
+                                                    action="{{ route('admin.pacientes.destroy', $paciente->id) }}"
                                                     method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')

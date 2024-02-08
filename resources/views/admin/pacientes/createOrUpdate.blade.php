@@ -1,17 +1,17 @@
-<x-app-layout>
-    <div class="container mx-auto">
-        <div class="flex justify-center">
-            <div class="w-3/4">
-                <div class="bg-white shadow-md rounded-lg">
+<x-admin-layout>
+ <div class="py-2 w-full">
+        <div class="ml-2 mr-2">
+            <div class="w-full">
+                <div class="bg-white shadow-md">
                     <div class="bg-gray-200 text-gray-800 px-6 py-4">
                         {{ isset($paciente) ? 'Editar Paciente' : 'Criar Paciente' }}</div>
 
                     <div class="p-6">
                         @if (isset($paciente))
-                            <form action="{{ route('pacientes.update', $paciente->id) }}" method="POST">
+                            <form action="{{ route('admin.pacientes.update', $paciente->id) }}" method="POST">
                                 @method('PUT')
                             @else
-                                <form action="{{ route('pacientes.store') }}" method="POST">
+                                <form action="{{ route('admin.pacientes.store') }}" method="POST">
                         @endif
                         @csrf
                         <!-- Dados Principais -->
@@ -56,7 +56,7 @@
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <!-- campo sexo -->
                                 <div>
                                     <label for="sexo" class="block mb-2">Sexo:</label>
@@ -89,7 +89,7 @@
                                     @error('email')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
-                                </div>                        
+                                </div>
                                 <!-- Outros campos principais -->
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                      
+
 
                         <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Salvar</button>
@@ -154,7 +154,7 @@
         function showOthersexoField() {
             var sexoSelect = document.getElementById('sexo');
             var othersexoField = document.getElementById('othersexoField');
-    
+
             if (sexoSelect.value === 'outro') {
                 othersexoField.style.display = 'block';
             } else {

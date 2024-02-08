@@ -30,7 +30,7 @@
                                         @error('name')
                                             <div class="text-red-500">{{ $message }}</div>
                                         @enderror
-                                        
+
                                         <div class="mt-4">
                                             <button type="submit"
                                                 class="px-2 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">{{ isset($role) ? 'Atualizar' : 'Salvar' }}</button>
@@ -42,7 +42,7 @@
                         <div class="mt-5 p-2">
                             <h2 class="text-2xl font-semibold">Role Permissions</h2>
                             <div class="flex space-x-2 mt-4 p-2">
-                                @if ($role->Permissions)
+                                @if (isset($role->Permissions))
                                     @foreach ($role->Permissions as $role_permission)
                                     <form method="POST"
                                     action="{{route('admin.roles.permissions.revoke',[$role->id, $role_permission->id])}}" onsubmit="return confirm('Tem certeza?')">
@@ -59,7 +59,7 @@
                             <form
                                 action="{{ route('admin.roles.permissions', $role)}}"
                                 method="POST">
-                                @csrf                               
+                                @csrf
                                 <div class="mb-4">
                                     <label for="name" class="block font-medium mb-1">Nome:</label>
                                     <input type="text" id="name" name="name"
@@ -80,7 +80,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                           
+
 
                                 <div class="mt-4">
                                     <button type="submit"

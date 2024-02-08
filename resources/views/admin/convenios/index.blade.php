@@ -1,88 +1,101 @@
 <x-admin-layout>
-    <div class="py-12 w-full">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- content -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                @if (session('message'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                        role="alert">
-                        <strong class="font-bold">{{ session('message') }}</strong>
-                    </div>
-                @endif
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between mb-4 mt-4">
-                        <a href="{{ route('admin.convenios.create') }}"
-                            class="px-4 py-2 bg-green-500 hover:bg-green-300 rounded-md self-center">Create</a>
-                    </div>
+    <div class="py-2 w-full">
+        <div class="ml-2 mr-2">
+            <div class="bg-white overflow-hidden shadow-sm p-2">
+                <div class="flex flex-col">
+                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="flex justify-end p-2">
+                                <x-success-button class="px-4 py-2 bg-green-500 hover:bg-green-300 text-white rounded-md"
+                                    href="{{ route('admin.convenios.create') }}" x-data=""
+                                    x-on:click.prevent="window.location.href='{{ route('admin.convenios.create') }}'">
+                                    {{ __('Novo') }}
+                                    </x-primary-button>
+                            </div>
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Registro</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Nome</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Carência</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach ($convenios as $convenio)
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        {{ $convenio->registro }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        {{ $convenio->nome }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        {{ $convenio->carencia }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="flex justify-end">
+                                                        <div class="flex space-x-2">
+                                                            <x-secondary-button
+                                                                href="{{ route('admin.convenios.show', $convenio->id) }}"
+                                                                x-data=""
+                                                                x-on:click.prevent="window.location.href='{{ route('admin.convenios.edit', $convenio->id) }}'">{{ __('Editar') }}</x-secondary-button>
 
-                    <div class="mb-6">
-                        <table class="min-w-full bg-white border border-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="py-3 px-4 bg-gray-100 font-semibold text-sm text-gray-600">Registro</th>
-                                    <th class="py-3 px-4 bg-gray-100 font-semibold text-sm text-gray-600">Nome</th>
-                                    <th class="py-3 px-4 bg-gray-100 font-semibold text-sm text-gray-600">Carencia</th>
-                                    <th class="py-3 px-4 bg-gray-100 font-semibold text-sm text-gray-600 justify-end">
-                                        Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($convenios as $convenio)
-                                    <tr>
-                                        <td class="py-3 px-4">{{ $convenio->registro }}</td>
-                                        <td class="py-3 px-4">{{ $convenio->nome }}</td>
-                                        <td class="py-3 px-4">{{ $convenio->carencia }}</td>
+                                                            <x-danger-button x-data=""
+                                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-convenio-deletion')">{{ __('Deletar') }}
+                                                            </x-danger-button>
 
-                                        <td class="py-3 px-4">
-                                            <div class="flex justify-end ">
-                                                <a href="{{ route('admin.convenios.edit', $convenio->id) }}"
-                                                    class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2">Editar</a>
-                                                    <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md" onclick="openDeleteModal('{{ $convenio->id }}')">Deletar</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                        {{ $convenios->links() }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
+    <x-modal name="confirm-convenio-deletion" :show="$errors->convenioDeletion->isNotEmpty()" focusable>
+        <form method="post" action="{{ route('admin.convenios.destroy', isset($convenio->id)) }}" class="p-6">
+            @csrf
+            @method('delete')
+
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Deseja realmente remover esse convênio') }}
+            </h2>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancelar') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ml-3">
+                    {{ __('Deletar') }}
+                </x-danger-button>
+            </div>
+        </form>
+    </x-modal>
+
+
+
 </x-admin-layout>
-
-<!-- Modal -->
-<div id="deleteModal" class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="bg-white w-1/3 p-6 rounded shadow-lg">
-        <h2 class="text-xl font-bold mb-4">Confirmar exclusão</h2>
-        <p class="mb-4">Tem certeza que deseja deletar?</p>
-        <div class="flex justify-end">
-            <button class="px-4 py-2 bg-gray-500 text-white rounded-md mr-2"
-                onclick="closeDeleteModal()">Cancelar</button>
-            <form id="deleteForm" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                    class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md">Deletar</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-    function openDeleteModal(convenioId) {
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = "{{ route('admin.convenios.destroy', '') }}" + "/" + convenioId;
-        deleteModal.classList.remove('hidden');
-    }
-
-    function closeDeleteModal() {
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.classList.add('hidden');
-    }
-</script>

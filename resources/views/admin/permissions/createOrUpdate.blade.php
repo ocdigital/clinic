@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="flex justify-end p-2">
-                    <a href="{{ route('admin.roles.index')}}" class="px-4 py-2 bg-green-500 hover:bg-green-300 rounded-md">Voltar</a>              
+                    <a href="{{ route('admin.roles.index')}}" class="px-4 py-2 bg-green-500 hover:bg-green-300 rounded-md">Voltar</a>
                 </div>
                 <div class="container mx-auto">
                     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -21,7 +21,7 @@
                                         <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-4 py-2" value="{{ isset($permission) ? $permission->name : old('name') }}">
                                     </div>
                                     @error('name')
-                                        <div class="text-red-500">{{ $message }}</div>                                    
+                                        <div class="text-red-500">{{ $message }}</div>
                                     @enderror
 
                                     <div class="mt-4">
@@ -34,8 +34,8 @@
                     <div class="mt-5 p-2">
                         <h2 class="text-2xl font-semibold">Roles</h2>
                         <div class="flex space-x-2 mt-4 p-2">
-                            @if ($permission->roles)
-                                @foreach ($permission->roles as $permission_role)               
+                            @if (isset($permission->roles))
+                                @foreach ($permission->roles as $permission_role)
                                 <form method="POST"
                                 action="{{route('admin.permissions.roles.remove',[$permission->id, $permission_role->id])}}" onsubmit="return confirm('Tem certeza?')">
                                 @csrf
@@ -48,22 +48,24 @@
                     </div>
                     <div class="max-w-xl mt-6">
                         <form
-                            action="{{ route('admin.permissions.roles', $permission->id)}}"
+                            action="{{ route('admin.permissions.roles', isset($permission->id))}}"
                             method="POST">
-                            @csrf                   
+                            @csrf
 
                             <div class="mb-4">
                                 <label for="roles"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Roles</label>
                                 <select id="roles" name="roles"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                   @if(isset($roles))
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
+                                    @endif
                                 </select>
                             </div>
-            
-                       
+
+
 
                             <div class="mt-4">
                                 <button type="submit"

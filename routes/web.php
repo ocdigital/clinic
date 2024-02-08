@@ -24,7 +24,7 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::post('/roles/{role}/permissions', [App\Http\Controllers\Admin\RoleController::class, 'givePermission'])->name('roles.permissions');
     Route::delete('/roles/{role}/permissions/{permission}', [App\Http\Controllers\Admin\RoleController::class, 'revokePermission'])->name('roles.permissions.revoke');
     // Route::delete('/roles/{role}/permissions/{permission}', [App\Http\Controllers\Admin\RoleController::class, 'revokePermission'])->name('roles.permissions.roles.remove');
-    
+
     Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
     Route::post('/permissions/{permission}/roles', [App\Http\Controllers\Admin\PermissionController::class, 'assignRole'])->name('permissions.roles');
     Route::delete('/permissions/{permission}/roles/{role}', [App\Http\Controllers\Admin\PermissionController::class, 'removeRole'])->name('permissions.roles.remove');
@@ -35,15 +35,27 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
 
     Route::patch('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('users.update');
 
-   
     Route::get('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('users.edit');
     Route::delete('/users/{user}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/{user}/roles', [App\Http\Controllers\Admin\UserController::class, 'assignRole'])->name('users.roles');
     Route::delete('/users/{user}/roles/{role}', [App\Http\Controllers\Admin\UserController::class, 'removeRole'])->name('users.roles.remove');
     Route::post('/users/{user}/permissions', [App\Http\Controllers\Admin\UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [App\Http\Controllers\Admin\UserController::class, 'revokePermission'])->name('users.permissions.revoke');
-    Route::get('/users/test', [App\Http\Controllers\Admin\UserController::class, 'test'])->name('users.test');
-    
+
+
+    /*Pacientes*/
+    Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'index'])->name('pacientes.index');
+    Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'show'])->name('pacientes.show');
+    Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store'])->name('pacientes.store');
+    Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('pacientes.update');
+    Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('pacientes.destroy');
+    //criar novo paciente
+    Route::get('/pacientes/create', [App\Http\Controllers\PacienteController::class, 'create'])->name('pacientes.create');
+
+    //rota para chamar a view editar paciente
+    Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
+
     Route::resource('/convenios', App\Http\Controllers\Admin\ConvenioController::class);
     Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);
 
@@ -67,16 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update']);
     Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
-    Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'index'])->name('pacientes.index');
-    Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'show'])->name('pacientes.show');
-    Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store'])->name('pacientes.store');
-    Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('pacientes.update'); 
-    Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('pacientes.destroy');
-    //criar novo paciente
-    Route::get('/pacientes/create', [App\Http\Controllers\PacienteController::class, 'create'])->name('pacientes.create');
 
-    //rota para chamar a view editar paciente
-    Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
 
 
 

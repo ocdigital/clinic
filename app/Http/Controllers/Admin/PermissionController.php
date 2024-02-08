@@ -13,7 +13,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
         return view('admin.permissions.index', compact('permissions'));
-        
+
     }
 
     public function create()
@@ -74,7 +74,7 @@ class PermissionController extends Controller
     }
 
     public function assignRole(Request $request, Permission $permission)
-    {   
+    {
 
         // Atribua a Role ao usuário
         $permission->assignRole($request->roles);
@@ -84,7 +84,7 @@ class PermissionController extends Controller
     }
 
     public function removeRole(Permission $permission, Role $role)
-    {   
+    {
         // Remova a Role do usuário
         $permission->removeRole($role);
 

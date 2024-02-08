@@ -11,7 +11,7 @@ class Paciente extends Model implements TypesenseDocument
 {
     use HasFactory;
 
-    use Searchable;
+    // use Searchable;
 
 
     protected $fillable = [
@@ -32,7 +32,7 @@ class Paciente extends Model implements TypesenseDocument
     public function toSearchableArray()
     {
         return array_merge(
-            $this->toArray(), 
+            $this->toArray(),
             [
                 // Cast id to string and turn created_at into an int32 timestamp
                 // in order to maintain compatibility with the Typesense index definition below
@@ -78,6 +78,6 @@ class Paciente extends Model implements TypesenseDocument
         return [
             'nome',
         ];
-    }    
+    }
 }
 

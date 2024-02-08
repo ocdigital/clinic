@@ -17,9 +17,6 @@
                     </x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Agenda') }}
-                    </x-nav-link>                    
-                    <x-nav-link :href="route('pacientes.index')" :active="request()->routeIs('pacientes.index')">
-                        {{ __('Pacientes') }}
                     </x-nav-link>
                     @role('admin')
                     <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">

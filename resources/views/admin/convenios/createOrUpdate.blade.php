@@ -1,10 +1,8 @@
 <x-admin-layout>
-    <div class="py-12 w-full">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="flex justify-center">
-                    <div class="w-3/4">
-                        <div class="bg-white shadow-md rounded-lg">
+ <div class="py-2 w-full">
+        <div class="ml-2 mr-2">
+            <div class="w-full">
+                        <div class="bg-white shadow-md">
                             <div class="bg-gray-200 text-gray-800 px-6 py-4">
                                 {{ isset($convenio) ? 'Editar convenio' : 'Criar convenio' }}
                             </div>
@@ -51,29 +49,29 @@
                                         </div>
 
                                         <!--exiba planos se for editar-->
-                                        @if (isset($convenio))                                           
+                                        @if (isset($plano))
                                         <h2 class="text-xl font-semibold mb-2">Planos</h2>
                                         <ul id="planos-list">
                                             <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                                 @foreach ($planos as $plano)
                                                     <li class="flex items-center justify-between">
                                                         <span>{{ $plano->nome }}</span>
-                                                        <div class="flex">                                                            
+                                                        <div class="flex">
                                                             <button type="button" onclick="deletarPlano({{ $plano->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Deletar</button>
                                                         </div>
                                                     </li>
                                                 @endforeach
                                             </dl>
                                         </ul>
-                                     
-                                        
+
+
                                         <div class="flex items-center">
                                             <input type="text" name="novoPlano" id="novoPlano" class="w-full px-4 py-2 border rounded @error('novoPlano') border-red-500 @enderror">
                                             <input type="text" name="convenio_id" value="{{ $convenio->id }}" class="hidden">
                                             <button type="button" onclick="addPlano()" class="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Adicionar</button>
                                         </div>
                                         @endif
-                                        
+
                                         <!-- aqui vai o form-->
                                     </div>
                                 </div>
@@ -86,8 +84,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </x-admin-layout>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -122,14 +118,14 @@
                     alert('Erro na requisição AJAX.');
                 }
             });
-        }        
+        }
     }
     function deletarPlano(itemId) {
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         if (confirm('Tem certeza de que deseja excluir este item?')) {
         // Faça aqui a lógica para excluir o item via AJAX
         // Você pode usar a função fetch() ou o objeto XMLHttpRequest para enviar uma requisição AJAX para o servidor
-        
+
         // Exemplo usando fetch():
         fetch('/admin/planos/' + itemId, {
             method: 'DELETE',
@@ -147,5 +143,5 @@
             });
         }
     }
-    
+
 </script>

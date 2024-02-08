@@ -16,7 +16,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -35,6 +35,9 @@
             <main>
                 {{ $slot }}
             </main>
+            <div style="position:fixed; bottom:0; width:100%; background:#f8fafc; text-align:center; padding:10px; border-top:1px solid #eaeaea;">
+                 PHP Version: {{ phpversion() }} | Laravel Version: {{ app()->version() }}
+            </div>
         </div>
     </body>
     <!-- Arquivos JavaScript do SweetAlert2 -->

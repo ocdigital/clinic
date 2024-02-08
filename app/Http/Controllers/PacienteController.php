@@ -21,28 +21,28 @@ class PacienteController extends Controller
         if ($request->filled('nome')) {
             $query->where('nome', 'like', '%' . $request->input('nome') . '%');
         }
-    
+
         // Filtrar por sexo
         if ($request->filled('sexo')) {
             $query->where('sexo', $request->input('sexo'));
         }
-    
+
         // Filtrar por email
         if ($request->filled('email')) {
             $query->where('email', 'like', '%' . $request->input('email') . '%');
         }
-    
+
         // Ordenar os resultados
         $orderColumn = $request->input('order_by', 'nome'); // Coluna padrão para ordenação é 'nome'
         $orderDirection = $request->input('order_direction', 'asc'); // Direção padrão é ascendente
-    
+
         $query->orderBy($orderColumn, $orderDirection);
-    
+
         $pacientes = $query->paginate(10);
 
         $message = $request->session()->get('message');
 
-        return view('pacientes.index', compact('pacientes', 'message'));
+        return view('admin.pacientes.index', compact('pacientes', 'message'));
     }
 
     // //retornar todas os pacientes para um endpoint da API
@@ -63,7 +63,7 @@ class PacienteController extends Controller
     public function create()
     {
 
-        return view('pacientes.createOrUpdate');
+        return view('admin.pacientes.createOrUpdate');
     }
 
     /**
@@ -84,7 +84,7 @@ class PacienteController extends Controller
             'telefone' => 'required',
             'email' => 'required',
         ]);
-        
+
         $paciente = new Paciente;
         $paciente->nome = $request->nome;
         $paciente->data_nascimento = $request->data_nascimento;
@@ -96,8 +96,8 @@ class PacienteController extends Controller
 
 
 
-        return redirect()->route('pacientes.index')->with('message', 'Paciente criado com sucesso!');
-        
+        return redirect()->route('admin.pacientes.index')->with('message', 'Paciente criado com sucesso!');
+
     }
 
     /**
@@ -107,19 +107,19 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {       
-        // dd('show');         
+    {
+        // dd('show');
             $paciente = Paciente::find($id);
-            return view('pacientes.createOrUpdate',compact('paciente'));
+            return view('admin.pacientes.createOrUpdate',compact('paciente'));
     }
 
     // //retornar um paciente específico para um endpoint da API
     // public function apiShow($id)
     // {
-    //     $paciente = Paciente::find($id);          
+    //     $paciente = Paciente::find($id);
     //     if(!$paciente){
     //         return response()->json(['message' => 'Paciente não encontrado'], 404);
-    //     }  
+    //     }
     //     return response()->json($paciente);
     // }
 
@@ -132,12 +132,12 @@ class PacienteController extends Controller
 
     //aponte para a view de edição de pacientes createOrUpdate
     public function edit($id)
-    {            
+    {
         $paciente = Paciente::find($id);
 
-        return view('pacientes.createOrUpdate',compact('paciente'));    
+        return view('admin.pacientes.createOrUpdate',compact('paciente'));
 
-        
+
     }
 
     /**
@@ -152,7 +152,7 @@ class PacienteController extends Controller
     public function update(Request $request, $id)
     {
             $paciente = Paciente::find($id);
-            
+
             $paciente->nome = $request->nome;
             $paciente->data_nascimento = $request->data_nascimento;
             $paciente->sexo = $request->sexo;
@@ -164,17 +164,17 @@ class PacienteController extends Controller
             // Definir a mensagem de sucesso
     $message = 'Paciente atualizado com sucesso';
 
-    return redirect()->route('pacientes.index')->with('message', $message);
-    
+    return redirect()->route('admin.pacientes.index')->with('message', $message);
+
     }
 
-    // //update para api  
+    // //update para api
     // public function apiUpdate(Request $request, $id)
     // {
     //     $paciente = Paciente::find($id);
     //     if(!$paciente){
     //         return response()->json(['message' => 'Paciente não encontrado'], 404);
-    //     }  
+    //     }
     //     $paciente->nome = $request->nome;
     //     $paciente->data_nascimento = $request->data_nascimento;
     //     $paciente->sexo = $request->sexo;
@@ -195,11 +195,11 @@ class PacienteController extends Controller
 
      //retornar para listagem de pacientes
     public function destroy($id)
-    {           
+    {
         $paciente = Paciente::find($id);
-        $paciente->delete();    
+        $paciente->delete();
 
-        return redirect()->route('pacientes.index')->with('message','Paciente deletado com sucesso');
+        return redirect()->route('admin.pacientes.index')->with('message','Paciente deletado com sucesso');
     }
 
     // //deletar um paciente e retroceder para a view de listagem de pacientes
@@ -208,8 +208,8 @@ class PacienteController extends Controller
     //     $paciente = Paciente::find($id);
     //     if(!$paciente){
     //         return response()->json(['message' => 'Paciente não encontrado'], 404);
-    //     }  
-    //     $paciente->delete();    
+    //     }
+    //     $paciente->delete();
     //     return response()->json(['message' => 'Paciente deletado com sucesso']);
     // }
 
@@ -220,5 +220,5 @@ class PacienteController extends Controller
 
 //         return response()->json($paciente);
 //     }
-// 
+//
 }

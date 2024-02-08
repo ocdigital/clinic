@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
       nowIndicator: true,
       navLinks: true,
 
-      
+
       events: '/events',
       editable: true,
       selectable: true,
@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
       views: {
         dayGridMonth: {
           dayMaxEventRows: 6 // adjust to 6 only for timeGridWeek/timeGridDay
-          
-        
+
+
         },
         timeGridWeek: {
 
@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
             basicWeek: true,
             "default": true
         },
-        
+
         hiddenDays: [ 0, 6 ], // dias da semana que não aparecem no calendário
 
 
       //Horário de funcionamento do calendário
-      
+
     businessHours: [
     {
         daysOfWeek: [1],
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     ],
 
- 
+
 
       headerToolbar: {
         left: 'prev,next today',
@@ -127,17 +127,17 @@ document.addEventListener('DOMContentLoaded', function() {
       },
 
       //Click Date
-      dateClick: function (date, jsEvent, view) {    
+      dateClick: function (date, jsEvent, view) {
         //extrair somente o horario do dia selecionado
         var time = moment(date.dateStr).format('HH:mm');
         //se horario estiver entre 12:00 e 13:00
         if(time >= '12:00' && time <= '13:00'){
-           
+
         }
         else{
             $('#popup').dialog({
                 title: 'Novo Evento',
-                modal: true,                      
+                modal: true,
                 buttons: {
                     Salvar: function () {
                         var name = $('#name').val();
@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         },
-      
-    eventClick: function (event, jsEvent, view) {  
+
+    eventClick: function (event, jsEvent, view) {
         $('#popup').dialog({
             title: 'Editar Evento',
             modal: true,
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     };
                     updateEvent(eventData);
                     $(this).dialog('close');
-                },              
+                },
                 Excluir: function () {
                     deleteEvent(event['event']['id']);
                     $(this).dialog('close');
@@ -268,7 +268,7 @@ function deleteEvent(eventId) {
         url: '/events/'+eventId,
         type: 'DELETE',
         success: function (response) {
-            calendar.refetchEvents();            
+            calendar.refetchEvents();
         }
     });
 }

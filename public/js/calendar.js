@@ -135,30 +135,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
         else{
-            $('#popup').dialog({
-                title: 'Novo Evento',
-                modal: true,
-                buttons: {
-                    Salvar: function () {
-                        var name = $('#name').val();
-                        var phone = $('#phone').val();
-                        var eventData = {
-                            title: name,
-                            start: moment(date.dateStr).format('YYYY-MM-DD HH:mm'),
-                            end: moment(date.dateStr).format('YYYY-MM-DD HH:mm')
-                        };
-                        createEvent(eventData);
-                        $(this).dialog('close');
-                    },
-                    Cancelar: function () {
-                        $(this).dialog('close');
-                    }
-                },
-                open: function () {
-                    $('#name').val('');
-                    $('#phone').val('');
-                }
-            });
+            console.log(date);
+                window.dispatchEvent(new CustomEvent("open-modal"));
+        //     $('#popup').dialog({
+        //         title: 'Novo Evento',
+        //         modal: true,
+        //         buttons: {
+        //             Salvar: function () {
+        //                 var name = $('#name').val();
+        //                 var phone = $('#phone').val();
+        //                 var eventData = {
+        //                     title: name,
+        //                     start: moment(date.dateStr).format('YYYY-MM-DD HH:mm'),
+        //                     end: moment(date.dateStr).format('YYYY-MM-DD HH:mm')
+        //                 };
+        //                 createEvent(eventData);
+        //                 $(this).dialog('close');
+        //             },
+        //             Cancelar: function () {
+        //                 $(this).dialog('close');
+        //             }
+        //         },
+        //         open: function () {
+        //             $('#name').val('');
+        //             $('#phone').val('');
+        //         }
+        //     });
         }
         },
 
@@ -222,21 +224,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function createEvent(eventData) {
     console.log(eventData);
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-    });
-    $.ajax({
-        url: '/events',
-        type: 'POST',
-        data: eventData,
-        success: function (response) {
-            eventData.id = response.id;
-            calendar.refetchEvents();
-        }
-    });
+     calendar.refetchEvents();
+    // $.ajaxSetup({
+    // headers: {
+    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    // }
+    // });
+    // $.ajax({
+    //     url: '/events',
+    //     type: 'POST',
+    //     data: eventData,
+    //     success: function (response) {
+    //         eventData.id = response.id;
+    //         calendar.refetchEvents();
+    //     }
+    // });
 }
+
+
+window.createEvent = createEvent;
 
 function updateEvent(eventData) {
     console.log(eventData);
@@ -274,4 +280,20 @@ function deleteEvent(eventId) {
 }
 
     calendar.render();
+
+
 });//Fecha o DOMContentLoaded
+
+
+$("#save").click(function () {
+    alert("teste");
+
+    // var name = $("#name").val();
+    // var phone = $("#phone").val();
+    // var eventData = {
+    //     title: name,
+    //     start: moment(date.dateStr).format("YYYY-MM-DD HH:mm"),
+    //     end: moment(date.dateStr).format("YYYY-MM-DD HH:mm"),
+    // };
+    // createEvent(eventData);
+});

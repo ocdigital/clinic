@@ -18,9 +18,14 @@
                         <input type="text" id="name" class="block w-full">
                     </div>
                     <div>
-                        <label for="phone">Telefone:</label>
-                        <input type="text" id="phone" class="block w-full">
+                        <label for="phone">inicio</label>
+                        <input type="text" id="start" class="block w-full">
                     </div>
+                     <div>
+                        <label for="phone">final</label>
+                        <input type="text" id="end" class="block w-full">
+                    </div>
+
                     <div class="mt-6 flex justify-end">
                         <x-secondary-button @click="showModal = false">
                             {{ __('Cancelar') }}
@@ -48,6 +53,16 @@
                     this.$watch('showModal', value => {
                         if (value) {
                             this.addSaveEventListener();
+
+                            const startTime = sessionStorage.getItem('newEventStart');
+                             const endTime = startTime;
+
+
+                                document.getElementById('start').value = startTime;
+                                document.getElementById('end').value = endTime;
+
+
+
                         }
                     });
                 },
@@ -60,19 +75,22 @@
                     // Por exemplo, enviar os dados do formulário para o servidor.
 
                     const nameInput = document.getElementById('name');
-                    const phoneInput = document.getElementById('phone');
+                    const startInput = document.getElementById('start');
+                    const endInput = document.getElementById('end');
 
-                    if (nameInput && phoneInput) {
+
+                    if (nameInput && startInput && endInput) {
                         const eventData = {
-                            name: nameInput.value,
-                            phone: phoneInput.value
+                           title: nameInput.value,
+                            start: startInput.value,
+                            end: endInput.value,
                         };
 
-                        console.log(eventData);
+
 
                         try {
                             // Aqui você pode chamar a função para criar o evento no calendário.
-                            // createEvent(eventData);
+                            createEvent(eventData);
                             return true;
                         } catch (error) {
                             console.error(error);

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('planos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_convenio');
+            $table->unsignedBigInteger('convenio_id');
             $table->string('nome');
             $table->timestamps();
 
-            $table->foreign('id_convenio')->references('id')->on('convenios');
+            $table->foreign('convenio_id')->references('id')->on('convenios');
         });
     }
 

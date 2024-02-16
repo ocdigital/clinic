@@ -48,13 +48,13 @@ class ConvenioController extends Controller
             'carencia' => 'required',
         ]);
 
-   
+
         $convenio = new Convenio;
         $convenio->registro = $request->registro;
         $convenio->nome = $request->nome;
         $convenio->carencia = $request->carencia;
         $convenio->save();
-    
+
         // Salvar os planos associados ao convênio
         $planoNomes = $request->plano_nome;
         if ($planoNomes && is_array($planoNomes)) {
@@ -68,16 +68,10 @@ class ConvenioController extends Controller
             }
         }
 
-        
-
-
-
-
-    
-        return redirect()->route('admin.convenios.index')->with('message', 'Convenio criado com sucesso!');
+        return redirect()->route('admin.convenios.index');
     }
-    
-    
+
+
 
     /**
      * Display the specified resource.
@@ -101,7 +95,9 @@ class ConvenioController extends Controller
         $convenio = Convenio::find($id);
         $planos = $convenio->planos;
 
-        return view('admin.convenios.createOrUpdate',compact('convenio','planos'));        
+
+
+        return view('admin.convenios.createOrUpdate',compact('convenio','planos'));
     }
 
     /**
@@ -126,7 +122,7 @@ class ConvenioController extends Controller
         $convenio->carencia = $request->carencia;
         $convenio->save();
 
-        return redirect()->route('admin.convenios.index')->with('message', 'Convenio atualizado com sucesso!');
+        return redirect()->route('admin.convenios.index');
     }
 
     /**
@@ -140,7 +136,7 @@ class ConvenioController extends Controller
         try{
         $convenio->delete();
 
-        return redirect()->route('admin.convenios.index')->with('message', 'Convenio deletado com sucesso!');
+        return redirect()->route('admin.convenios.index');
         }
         catch(\Exception $e){
             return redirect()->route('admin.convenios.index')->with('message', 'Não foi possível deletar o convenio, pois existem planos associados a ele!');

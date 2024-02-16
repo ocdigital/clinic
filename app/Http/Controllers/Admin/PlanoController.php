@@ -15,6 +15,8 @@ class PlanoController extends Controller
      */
     public function index()
     {
+        $planos = Plano::all();
+        dd($planos);
     }
 
     /**
@@ -103,8 +105,8 @@ class PlanoController extends Controller
         }
         // Redirecionar de volta à página de edição
         return redirect()
-            ->back()
-            ->with('message', 'Convenio atualizado com sucesso!');
+            ->back();
+
     }
 
     /**
@@ -123,9 +125,5 @@ class PlanoController extends Controller
             'success' => 'Plano removido com sucesso!'
         ]);
 
-        // // Redirecionar de volta à página de edição
-        // return redirect()
-        //     ->back()
-        //     ->with('message', 'Plano removido com sucesso!');
     }
 }

@@ -20,6 +20,9 @@ module.exports = {
                     500: "#FB923C", // Adicione o valor hexadecimal da cor desejada
                     700: "#F97316", // Adicione o valor hexadecimal da cor desejada
                 },
+                sky: {
+                    900: "#0c4a6e", // Adicione o valor hexadecimal da cor desejada
+                },
             },
         },
     },

@@ -146,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
     eventClick: function (event, jsEvent, view) {
+        alert('Event: ' + event.event.title);
         console.log(event);
         $('#popup').dialog({
             title: 'Editar Evento',
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             id: event['event']['id'],
             title: event['event']['title'],
             start:moment(event['event']['start']).format('YYYY-MM-DD HH:mm'),
-            end: moment(event['event']['start']).format('YYYY-MM-DD HH:mm'),
+            end: moment(event['event']['end']).format('YYYY-MM-DD HH:mm'),
         };
         updateEvent(eventData);
     },//Fecha o eventDrop

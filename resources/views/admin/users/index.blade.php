@@ -5,7 +5,9 @@
                 <div class="flex flex-col">
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+
                             <div class="flex justify-end p-2">
+
                                 <x-success-button class="px-4 py-2 bg-green-500 hover:bg-green-300 text-white rounded-md"
                                     href="{{ route('admin.users.create') }}" x-data=""
                                     x-on:click.prevent="window.location.href='{{ route('admin.users.create') }}'">
@@ -14,16 +16,19 @@
                             </div>
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                 <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
+                                    <thead class="bg-sky-900 text-white">
                                         <tr>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-mediu uppercase tracking-wider">
                                                 Nome</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
                                                 Email</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
+                                                Tipo</th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-right text-xs font-medium  uppercase tracking-wider">
                                                 Editar</th>
                                         </tr>
                                     </thead>
@@ -40,6 +45,11 @@
                                                         {{ $user->email }}
                                                     </div>
                                                 </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        {{ $user->tipo }}
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <div class="flex justify-end">
                                                         <div class="flex space-x-2">
@@ -48,9 +58,18 @@
                                                                 x-data=""
                                                                 x-on:click.prevent="window.location.href='{{ route('admin.users.edit', $user->id) }}'">{{ __('Editar') }}</x-secondary-button>
 
-                                                            <x-danger-button x-data=""
-                                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">{{ __('Deletar') }}
-                                                            </x-danger-button>
+                                                            {{-- <x-danger-button x-data=""
+                                                                x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion', { userId: {{ $user->id }} })">{{ __('Deletar') }}
+                                                            </x-danger-button> --}}
+
+                                                             <form method="post" action="{{ route('admin.users.destroy', $user->id) }}"
+                                                                onsubmit="return confirm('Deseja realmente remover esse usuário?');">
+                                                                @csrf
+                                                                @method('delete')
+                                                                 <x-danger-button x-data="">
+                                                                    {{ __('Deletar') }}
+                                                                </x-danger-button>
+                                                             </form>
 
                                                         </div>
                                                     </div>
@@ -67,7 +86,7 @@
         </div>
     </div>
 
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+    {{-- <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('admin.users.destroy', $user->id) }}" class="p-6">
             @csrf
             @method('delete')
@@ -86,7 +105,7 @@
                 </x-danger-button>
             </div>
         </form>
-    </x-modal>
+    </x-modal> --}}
 
 
 

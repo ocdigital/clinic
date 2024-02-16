@@ -3,7 +3,7 @@
         <div class="ml-2 mr-2">
             <div class="w-full">
                         <div class="bg-white shadow-md">
-                            <div class="bg-gray-200 text-gray-800 px-6 py-4">
+                            <div class="bg-sky-900 text-white px-6 py-4">
                                 {{ isset($convenio) ? 'Editar convenio' : 'Criar convenio' }}
                             </div>
 
@@ -18,39 +18,45 @@
                                 <!-- Dados Principais -->
                                 <div class="mb-4">
                                     <h2 class="text-xl font-semibold mb-2">Dados Principais</h2>
-                                    <div class="grid grid-cols-2 gap-4">
+                                    <div class="grid grid-cols-3">
                                         <div>
-                                            <label for="registro" class="block mb-2">Registro:</label>
+                                            <label for="registro" class="mb-2">Registro:</label>
                                             <input type="text" name="registro" id="registro"
                                                 class="w-full px-4 py-2 border rounded @error('registro') border-red-500 @enderror"
-                                                value="{{ isset($convenio) ? $convenio->registro : '' }}">
+                                                value="{{ old('registro', isset($convenio) ? $convenio->registro : '') }}">
                                             @error('registro')
                                                 <span class="text-red-500">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div>
-                                            <label for="nome" class="block mb-2">Nome:</label>
+                                            <label for="nome" class="mb-2">Nome:</label>
                                             <input type="text" name="nome" id="nome"
                                                 class="w-full px-4 py-2 border rounded @error('nome') border-red-500 @enderror"
-                                                value="{{ isset($convenio) ? $convenio->nome : '' }}">
+                                                value="{{ old('nome', isset($convenio) ? $convenio->nome : '') }}">
                                             @error('nome')
                                                 <span class="text-red-500">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <!--campo carencia-->
                                         <div>
-                                            <label for="carencia" class="block mb-2">Carencia:</label>
+                                            <label for="carencia" class="mb-2">Carencia:</label>
                                             <input type="text" name="carencia" id="carencia"
                                                 class="w-full px-4 py-2 border rounded @error('carencia') border-red-500 @enderror"
-                                                value="{{ isset($convenio) ? $convenio->carencia : '' }}">
+                                                value="{{ old('carencia', isset($convenio) ? $convenio->carencia : '') }}">
                                             @error('carencia')
                                                 <span class="text-red-500">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                    </div>
+
 
                                         <!--exiba planos se for editar-->
-                                        @if (isset($plano))
+
+                                        @if (isset($planos))
+
+                                        <hr>
                                         <h2 class="text-xl font-semibold mb-2">Planos</h2>
+                                        <div class="w-1/2">
                                         <ul id="planos-list">
                                             <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                                 @foreach ($planos as $plano)
@@ -65,7 +71,7 @@
                                         </ul>
 
 
-                                        <div class="flex items-center">
+                                        <div class="flex items-center mt-3">
                                             <input type="text" name="novoPlano" id="novoPlano" class="w-full px-4 py-2 border rounded @error('novoPlano') border-red-500 @enderror">
                                             <input type="text" name="convenio_id" value="{{ $convenio->id }}" class="hidden">
                                             <button type="button" onclick="addPlano()" class="ml-2 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Adicionar</button>
@@ -74,9 +80,11 @@
 
                                         <!-- aqui vai o form-->
                                     </div>
+
+                                     <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Salvar</button>
                                 </div>
 
-                                <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Salvar</button>
+
 
                                 </form>
                             </div>

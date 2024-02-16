@@ -3,7 +3,7 @@
         <div class="ml-2 mr-2">
             <div class="w-full">
                 <div class="bg-white shadow-md">
-                    <div class="bg-gray-200 text-gray-800 px-6 py-4">
+                   <div class="bg-sky-900 text-white px-6 py-4">
                         {{ isset($paciente) ? 'Editar Paciente' : 'Criar Paciente' }}</div>
 
                     <div class="p-6">
@@ -22,7 +22,7 @@
                                     <label for="nome" class="block mb-2">Nome:</label>
                                     <input type="text" name="nome" id="nome"
                                         class="w-full px-4 py-2 border rounded @error('nome') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->nome : '' }}">
+                                        value="{{ old('nome', isset($paciente) ? $paciente->nome : '') }}">
                                     @error('nome')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
@@ -31,27 +31,18 @@
                                     <label for="data_nascimento" class="block mb-2">Data de Nascimento:</label>
                                     <input type="date" name="data_nascimento" id="data_nascimento"
                                         class="w-full px-4 py-2 border rounded @error('data_nascimento') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->data_nascimento : '' }}">
+                                        value="{{ old('data_nascimento', isset($paciente) ? $paciente->data_nascimento : '') }}">
                                     @error('data_nascimento')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <!--endereço-->
-                                <div>
-                                    <label for="endereco" class="block mb-2">Endereço:</label>
-                                    <input type="text" name="endereco" id="endereco"
-                                        class="w-full px-4 py-2 border rounded @error('endereco') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->endereco : '' }}">
-                                    @error('endereco')
-                                        <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>
+
                                 <!--telefone-->
                                 <div>
-                                    <label for="telefone" class="block mb-2">Telefone:</label>
+                                    <label for="telefone" class="block mb-2">Celular:</label>
                                     <input type="text" name="telefone" id="telefone"
                                         class="w-full px-4 py-2 border rounded @error('telefone') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->telefone : '' }}">
+                                        value="{{ old('telefone', isset($paciente) ? $paciente->telefone : '') }}">
                                     @error('telefone')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
@@ -81,15 +72,7 @@
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
 
-                                <div>
-                                    <label for="email" class="block mb-2">E-mail:</label>
-                                    <input type="email" name="email" id="email"
-                                        class="w-full px-4 py-2 border rounded @error('email') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->email : '' }}">
-                                    @error('email')
-                                        <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>
+
                                 <!-- Outros campos principais -->
                             </div>
                         </div>
@@ -99,42 +82,23 @@
                             <h2 class="text-xl font-semibold mb-2">Dados Complementares</h2>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="address" class="block mb-2">Endereço:</label>
-                                    <input type="text" name="address" id="address"
-                                        class="w-full px-4 py-2 border rounded @error('address') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->address : '' }}">
-                                    @error('address')
+                                    <label for="endereco" class="block mb-2">Endereço:</label>
+                                    <input type="text" name="endereco" id="endereco"
+                                        class="w-full px-4 py-2 border rounded @error('endereco') border-red-500 @enderror"
+                                        value="{{ old('endereco', isset($paciente) ? $paciente->endereco : '') }}">
+                                    @error('endereco')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div>
-                                    <label for="occupation" class="block mb-2">Profissão:</label>
-                                    <input type="text" name="occupation" id="occupation"
-                                        class="w-full px-4 py-2 border rounded @error('occupation') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->occupation : '' }}">
-                                    @error('occupation')
+                                    <label for="email" class="block mb-2">E-mail:</label>
+                                    <input type="email" name="email" id="email"
+                                        class="w-full px-4 py-2 border rounded @error('email') border-red-500 @enderror"
+                                        value="{{ old('email', isset($paciente) ? $paciente->email : '') }}">
+                                    @error('email')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div>
-                                    <label for="height" class="block mb-2">Altura:</label>
-                                    <input type="text" name="height" id="height"
-                                        class="w-full px-4 py-2 border rounded @error('height') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->height : '' }}">
-                                    @error('height')
-                                        <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <label for="weight" class="block mb-2">Peso:</label>
-                                    <input type="text" name="weight" id="weight"
-                                        class="w-full px-4 py-2 border rounded @error('weight') border-red-500 @enderror"
-                                        value="{{ isset($paciente) ? $paciente->weight : '' }}">
-                                    @error('weight')
-                                        <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <!-- Outros campos complementares -->
                             </div>
                         </div>
 

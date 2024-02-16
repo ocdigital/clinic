@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -25,30 +26,47 @@ class UserController extends Controller
 
     //edit
     public function edit(User $user)
-    {   
+    {
         return view('admin.users.createOrUpdate', compact('user'));
     }
 
     //store
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
-            'email' => 'email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
+            'email' => 'email|unique:users,email'
         ]);
-    
+
         try {
-            $user = User::create($request->all()); // Inclui todos os campos, incluindo "password"
-            $user->password = bcrypt($request->password);
+            $user = new User();
+            $user->fill($request->all());
+            $user->password = Hash::make('3221#Edu');
             $user->save();
-            return redirect()->route('admin.users.index')->with('message', 'User created.');
+            return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['message' => $e->getMessage()]);
         }
     }
-    
-    
+
+    //update
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'email|unique:users,email,' . $user->id
+        ]);
+
+        try {
+            $user->update($request->all());
+            $user->save();
+            return redirect()->route('admin.users.index');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
 
     public function show(User $user)
     {
@@ -67,7 +85,7 @@ class UserController extends Controller
         }
 
         $user->assignRole($request->role);
-        return back()->with('message', 'Role assigned.');
+        return back();
     }
 
     public function removeRole(User $user, Role $role)
@@ -86,7 +104,7 @@ class UserController extends Controller
             return back()->with('message', 'Permission exists.');
         }
         $user->givePermissionTo($request->permission);
-        return back()->with('message', 'Permission added.');
+        return back();
     }
 
     public function revokePermission(User $user, Permission $permission)
@@ -105,10 +123,7 @@ class UserController extends Controller
         }
         $user->delete();
 
-        return back()->with('message', 'User deleted.');
+        return back();
     }
 
-    public function test(){
-        dd('teste');
-    }
 }

@@ -14,25 +14,25 @@
                             </div>
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                 <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
+                                   <thead class="bg-sky-900 text-white">
                                         <tr>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Nome</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Nascimento</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Sexo</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Telefone</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Email</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">
                                                 Editar</th>
                                         </tr>
                                     </thead>
@@ -72,9 +72,18 @@
                                                                 x-data=""
                                                                 x-on:click.prevent="window.location.href='{{ route('admin.pacientes.edit', $paciente->id) }}'">{{ __('Editar') }}</x-secondary-button>
 
-                                                            <x-danger-button x-data=""
+                                                            {{-- <x-danger-button x-data=""
                                                                 x-on:click.prevent="$dispatch('open-modal', 'confirm-paciente-deletion')">{{ __('Deletar') }}
-                                                            </x-danger-button>
+                                                            </x-danger-button> --}}
+
+                                                             <form method="post" action="{{ route('admin.pacientes.destroy', $paciente->id) }}"
+                                                                onsubmit="return confirm('Deseja realmente remover esse paciente?');">
+                                                                @csrf
+                                                                @method('delete')
+                                                                 <x-danger-button x-data="">
+                                                                    {{ __('Deletar') }}
+                                                                </x-danger-button>
+                                                             </form>
 
                                                         </div>
                                                     </div>
@@ -90,28 +99,5 @@
             </div>
         </div>
     </div>
-
-    <x-modal name="confirm-paciente-deletion" :show="$errors->pacienteDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('admin.pacientes.destroy', $paciente->id) }}" class="p-6">
-            @csrf
-            @method('delete')
-
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Deseja realmente remover esse usuário') }}
-            </h2>
-
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancelar') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ml-3">
-                    {{ __('Deletar') }}
-                </x-danger-button>
-            </div>
-        </form>
-    </x-modal>
-
-
 
 </x-admin-layout>

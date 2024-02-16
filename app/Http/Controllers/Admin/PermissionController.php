@@ -34,7 +34,7 @@ class PermissionController extends Controller
         ]);
 
         // Redirecione para a página desejada após a criação da Role
-        return redirect()->route('admin.permissions.index')->with('message', 'Permissão criada com sucesso!');
+        return redirect()->route('admin.permissions.index');
     }
 
     public function show(Permission $permission)
@@ -61,7 +61,7 @@ class PermissionController extends Controller
         ]);
 
         // Redirecione para a página desejada após a atualização da Role
-        return redirect()->route('admin.permissions.index')->with('message', 'Permissão atualizada com sucesso!');
+        return redirect()->route('admin.permissions.index');
     }
 
     public function destroy(Permission $permission)
@@ -70,7 +70,7 @@ class PermissionController extends Controller
         $permission->delete();
 
         // Redirecione para a página desejada após a exclusão da Role
-        return redirect()->route('admin.permissions.index')->with('message', 'Permissão excluída com sucesso!');
+        return redirect()->route('admin.permissions.index');
     }
 
     public function assignRole(Request $request, Permission $permission)
@@ -80,7 +80,7 @@ class PermissionController extends Controller
         $permission->assignRole($request->roles);
 
         // Redirecione para a página desejada após a atribuição da Role
-        return back()->with('message', 'Permissão atribuída com sucesso!');
+        return back();
     }
 
     public function removeRole(Permission $permission, Role $role)
@@ -89,6 +89,6 @@ class PermissionController extends Controller
         $permission->removeRole($role);
 
         // Redirecione para a página desejada após a remoção da Role
-        return back()->with('message', 'Permissão removida com sucesso!');
+        return back();
     }
 }

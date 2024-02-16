@@ -96,7 +96,7 @@ class PacienteController extends Controller
 
 
 
-        return redirect()->route('admin.pacientes.index')->with('message', 'Paciente criado com sucesso!');
+        return redirect()->route('admin.pacientes.index');
 
     }
 
@@ -161,10 +161,7 @@ class PacienteController extends Controller
             $paciente->email = $request->email;
             $paciente->save();
 
-            // Definir a mensagem de sucesso
-    $message = 'Paciente atualizado com sucesso';
-
-    return redirect()->route('admin.pacientes.index')->with('message', $message);
+            return redirect()->route('admin.pacientes.index');
 
     }
 
@@ -199,7 +196,7 @@ class PacienteController extends Controller
         $paciente = Paciente::find($id);
         $paciente->delete();
 
-        return redirect()->route('admin.pacientes.index')->with('message','Paciente deletado com sucesso');
+        return redirect()->route('admin.pacientes.index');
     }
 
     // //deletar um paciente e retroceder para a view de listagem de pacientes

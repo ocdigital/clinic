@@ -19,7 +19,7 @@
                         </div>
                     @endif
 
-                    <div class="bg-gray-200 text-gray-800 px-6 py-4">
+                   <div class="bg-sky-900 text-white px-6 py-4">
                         {{ isset($user) ? 'Editar Usuário' : 'Criar Usuário' }}
                     </div>
 
@@ -41,10 +41,13 @@
                                     <label for="tipo" class="block mb-2">Tipo:</label>
                                     <select name="tipo" id="tipo" class="w-full px-4 py-2 border rounded"
                                         onchange="ocultaCampos()">
-                                        <option value="medico" {{ old('tipo', isset($user) ? $user->tipo : '') == 'medico' ? 'selected' : '' }}>
-                                            Médico</option>
+                                        <option value="admin" {{ old('tipo', isset($user) ? $user->tipo : '') == 'admin' ? 'selected' : '' }}>
+                                            Administrador</option>
                                         <option value="atendente" {{ old('tipo', isset($user) ? $user->tipo : '') == 'atendente' ? 'selected' : '' }}>
                                             Atendente</option>
+                                        <option value="medico" {{ old('tipo', isset($user) ? $user->tipo : '') == 'medico' ? 'selected' : '' }}>
+                                            Médico</option>
+
                                     </select>
                                 </div>
 
@@ -70,29 +73,9 @@
                             </div>
                         </div>
 
-                        <!-- Outros campos -->
-                        <div class="mb-4">
-                            <label for="occupation" class="block mb-2 campo-oculto">Profissão:</label>
-                            <input type="text" name="occupation" id="occupation"
-                                class="w-full px-4 py-2 border rounded campo-oculto @error('occupation') border-red-500 @enderror"
-                                value="{{ old('occupation', isset($user) ? $user->occupation : '') }}">
-                            @error('occupation')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="height" class="block mb-2 campo-oculto">CBO:</label>
-                            <input type="text" name="height" id="height"
-                                class="w-full px-4 py-2 border rounded campo-oculto @error('height') border-red-500 @enderror"
-                                value="{{ old('height', isset($user) ? $user->height : '') }}">
-                            @error('height')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
 
                         <!-- Senha e confirmação de senha -->
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="password" class="block mb-2">Senha:</label>
                             <input type="password" name="password" id="password"
                                 class="w-full px-4 py-2 border rounded @error('password') border-red-500 @enderror">
@@ -108,7 +91,7 @@
                             @error('password_confirmation')
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Salvar</button>

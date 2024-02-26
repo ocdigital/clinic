@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
 
 use App\Models\Paciente;
 use Illuminate\Http\Request;
+use App\Models\Convenio;
+use App\Http\Controllers\Controller;
 
 class PacienteController extends Controller
 {
@@ -45,14 +48,42 @@ class PacienteController extends Controller
         return view('admin.pacientes.index', compact('pacientes', 'message'));
     }
 
+    public function autocomplete(Request $request)
+    {
+        $data = Paciente::select("nome as value", "id")
+            ->where('nome', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
+        return response()->json($data);
+    }
+
+
     // //retornar todas os pacientes para um endpoint da API
-    // public function apiIndex()
-    // {
+    public function apiIndex(Request $request)
+    {
+        $termoPesquisa = $request->input('termo_pesquisa');
 
-    //     $pacientes=Paciente::paginate(2);
+        $query = Paciente::query();
 
-    //     return response()->json($pacientes);
-    // }
+        if ($termoPesquisa) {
+            $query->where('nome', 'LIKE', '%' . $termoPesquisa . '%');
+        }
+
+        $pacientes = $query->with('convenio')->get();
+
+        $select2Data = [];
+        foreach ($pacientes as $paciente) {
+            $select2Data[] = [
+                'id'            => $paciente->id,
+                'text'          => $paciente->nome,
+                'convenio_nome' => optional($paciente->convenio)->nome,
+                'telefone'      => $paciente->telefone,
+            ];
+        }
+
+        return response()->json(['results' => $select2Data]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,11 +91,13 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create()
-    {
 
-        return view('admin.pacientes.createOrUpdate');
+    public function create(){
+        $convenios = Convenio::all();
+        return view('admin.pacientes.createOrUpdate', compact('convenios'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -92,6 +125,7 @@ class PacienteController extends Controller
         $paciente->endereco = $request->endereco;
         $paciente->telefone = $request->telefone;
         $paciente->email = $request->email;
+        $paciente->convenio_id = $request->convenio_id;
         $paciente->save();
 
 
@@ -134,8 +168,11 @@ class PacienteController extends Controller
     public function edit($id)
     {
         $paciente = Paciente::find($id);
+        $convenios = Convenio::all();
 
-        return view('admin.pacientes.createOrUpdate',compact('paciente'));
+        dd($paciente);
+
+        return view('admin.pacientes.createOrUpdate',compact('paciente', 'convenios'));
 
 
     }
@@ -159,6 +196,7 @@ class PacienteController extends Controller
             $paciente->endereco = $request->endereco;
             $paciente->telefone = $request->telefone;
             $paciente->email = $request->email;
+            $paciente->convenio_id = $request->convenio_id;
             $paciente->save();
 
             return redirect()->route('admin.pacientes.index');

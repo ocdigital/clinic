@@ -99,6 +99,18 @@
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <!-- convenios, $convenios -->
+                                <div>
+                                    <label for="convenio_id" class="block mb-2">Convênio:</label>
+                                    <select name="convenio_id" id="convenio_id" class="w-full px-4 py-2 border rounded">
+                                        @foreach ($convenios as $convenio)
+                                            <option value="{{ $convenio->id }}" {{ isset($paciente) && $paciente->convenio_id === $convenio->id ? 'selected' : '' }}>{{ $convenio->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
                             </div>
                         </div>
 

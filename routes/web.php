@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PacienteController;
 
 
 
@@ -19,6 +20,9 @@ Route::get('/admin', function () {
 })->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
 
 Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group(function () {
+
+    Route::get('/agendamentos', [App\Http\Controllers\EventController::class, 'agendamentos'])->name('agendamentos.index');
+
 
     Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
     Route::post('/roles/{role}/permissions', [App\Http\Controllers\Admin\RoleController::class, 'givePermission'])->name('roles.permissions');
@@ -46,16 +50,17 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
 
 
     /*Pacientes*/
-    Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'index'])->name('pacientes.index');
-    Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'show'])->name('pacientes.show');
-    Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store'])->name('pacientes.store');
-    Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'update'])->name('pacientes.update');
-    Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'destroy'])->name('pacientes.destroy');
+    Route::get('/pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
+    Route::get('/pacientes/create', [PacienteController::class, 'create'])->name('pacientes.create');
+    Route::get('/pacientes/{id}', [PacienteController::class, 'show'])->name('pacientes.show');
+    Route::post('/pacientes', [PacienteController::class, 'store'])->name('pacientes.store');
+    Route::put('/pacientes/{id}', [PacienteController::class, 'update'])->name('pacientes.update');
+    Route::delete('/pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');
     //criar novo paciente
-    Route::get('/pacientes/create', [App\Http\Controllers\PacienteController::class, 'create'])->name('pacientes.create');
+
 
     //rota para chamar a view editar paciente
-    Route::get('/pacientes/edit/{id}', [App\Http\Controllers\PacienteController::class, 'edit'])->name('pacientes.edit');
+    Route::get('/pacientes/edit/{id}', [PacienteController::class, 'edit'])->name('pacientes.edit');
 
     Route::resource('/convenios', App\Http\Controllers\Admin\ConvenioController::class);
     Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);

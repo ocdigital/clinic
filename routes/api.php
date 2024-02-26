@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PacienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update
 Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
 // //Pacientes
-// Route::get('/pacientes', [App\Http\Controllers\PacienteController::class, 'apiIndex'])->middleware('auth:sanctum');
+Route::get('/pacientes', [PacienteController::class, 'apiIndex']);
 // Route::get('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiShow']);
 // Route::post('/pacientes', [App\Http\Controllers\PacienteController::class, 'store']);
 // Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);

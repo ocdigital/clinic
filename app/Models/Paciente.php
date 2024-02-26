@@ -21,8 +21,14 @@ class Paciente extends Model implements TypesenseDocument
         'endereco',
         'telefone',
         'email',
-        'historico_medico'
+        'historico_medico',
+        'convenio_id'
     ];
+
+    public function convenio()
+    {
+        return $this->belongsTo(Convenio::class);
+    }
 
      /**
      * Get the indexable data array for the model.

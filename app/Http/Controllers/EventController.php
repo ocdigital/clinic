@@ -13,6 +13,13 @@ class EventController extends Controller
         return response()->json($events);
     }
 
+    public function agendamentos()
+    {
+        $agendamentos = Event::paginate(10);
+        return view('admin.agendamentos.index', compact('agendamentos'));
+
+    }
+
     public function show($id)
     {
         $event = Event::find($id);
@@ -21,7 +28,7 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-       
+
         $event = new Event;
         $event->title = $request->title;
         $event->start = $request->start;
@@ -31,26 +38,26 @@ class EventController extends Controller
         return response()->json($event);
     }
 
-    
+
 
     public function update(Request $request, $id)
     {
-       
+
         $event = Event::find($id);
         $event->title = $request->title;
         $event->start = $request->start;
         $event->end = $request->end;
         $event->save();
-    
+
         return response()->json($event);
     }
-    
+
     public function destroy($id)
     {
         $event = Event::find($id);
         $event->delete();
-    
+
         return response()->json(['message' => 'Event deleted successfully']);
     }
-    
+
 }

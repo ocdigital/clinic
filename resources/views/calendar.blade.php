@@ -1,11 +1,13 @@
 <x-app-layout>
 
     <div class="col-12 auto">
+
         <div id='calendar'></div>
+
     </div>
 
     <!-- Modal Component -->
-    <div x-data="eventFormHandler()" x-show="showModal" @open-modal.window="showModal = true" @close-modal.window="showModal = false">
+    <div x-data="eventFormHandler()" x-show="showModal" @open-modal.window="showModal = true" @close-modal.window="showModal = false" tabindex="-1">
         <template x-if="showModal">
             <x-modal name="create-event" :show="true" focusable>
                 <form class="p-6" id="eventForm">
@@ -13,17 +15,24 @@
                     <h2 class="text-lg font-medium text-gray-900">
                         {{ __('Criar Novo Evento') }}
                     </h2>
-                    <div>
+
+                    <input type="hidden" id="start" class="block w-full">
+                    <input type="hidden" id="end" class="block w-full">
+
+                    <div class="mt-4">
                         <label for="name">Nome:</label>
-                        <input type="text" id="name" class="block w-full">
+                        <select class="js-data-example-ajax block w-full" id="name" title="Search for a repository"
+                        style="width:100%"></select>
                     </div>
-                    <div>
-                        <label for="phone">inicio</label>
-                        <input type="text" id="start" class="block w-full">
+
+                    <div class="mt-4">
+                        <label for="celular">Celular</label>
+                        <input type="text" name="celular" id="celular" class="block w-full" value="" readonly>
                     </div>
-                     <div>
-                        <label for="phone">final</label>
-                        <input type="text" id="end" class="block w-full">
+
+                    <div class="mt-4">
+                        <label for="convenio">Convênio</label>
+                        <input type="text" name="convenio" id="convenio" class="block w-full" value="" readonly>
                     </div>
 
                     <div class="mt-6 flex justify-end">
@@ -45,6 +54,10 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script src="{{ asset('/js/calendar.js') }}"></script>
 
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('eventFormHandler', () => ({
@@ -52,6 +65,7 @@
                 init() {
                     this.$watch('showModal', value => {
                         if (value) {
+                             this.initializeAutocomplete();
                             this.addSaveEventListener();
 
                             const startTime = sessionStorage.getItem('newEventStart');
@@ -65,6 +79,54 @@
 
                         }
                     });
+                },
+                initializeAutocomplete() {
+                  $('.js-data-example-ajax').select2({
+    ajax: {
+        url: 'http://clinic.local/api/pacientes',
+        dataType: 'json',
+        delay: 250, // Adiciona um pequeno atraso antes de iniciar a pesquisa
+        data: function (params) {
+            return {
+                termo_pesquisa: params.term, // O termo de pesquisa digitado pelo usuário
+            };
+        },
+        processResults: function (data) {
+            // Se nenhum nome for encontrado, adicionamos um resultado personalizado
+            if (data.results.length === 0) {
+                data.results.push({
+                    id: 'not_found',
+                    text: 'Nenhum nome encontrado. Cadastrar Novo?',
+                    cadastrar: true,
+                });
+            }
+
+            console.log(data.results[0]);
+
+            document.getElementById('convenio').value = data.results[0].convenio_nome;
+            document.getElementById('celular').value = data.results[0].telefone;
+
+            return {
+                results: data.results,
+            };
+        },
+        cache: true,
+    },
+    minimumInputLength: 3, // Número mínimo de caracteres antes de começar a pesquisar
+    templateResult: function (data) {
+        // Personalizamos a exibição do resultado, adicionando um botão de cadastro
+        if (data.cadastrar) {
+            return $('<span><button class="btn btn-primary">Cadastrar Novo</button></span>');
+        }
+        return data.text;
+    },
+}).on('select2:select', function (e) {
+    // Tratamos o evento de seleção, e aqui você pode adicionar a lógica para o botão Cadastrar Novo
+    if (e.params.data.cadastrar) {
+        alert('Lógica para cadastrar novo aqui');
+        // Adicione sua lógica para abrir o formulário de cadastro ou realizar outra ação desejada
+    }
+});
                 },
                 addSaveEventListener() {
                     document.getElementById('save').addEventListener('click', this.saveEvent);
@@ -102,6 +164,7 @@
                 }
             }));
         });
+
     </script>
 
 </x-app-layout>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PacienteController;
+use App\Http\Controllers\EmailController;
 
 
 
@@ -14,6 +15,8 @@ Route::get('/calendar', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified']);
+
+Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 
 Route::get('/admin', function () {
     return view('admin.index');

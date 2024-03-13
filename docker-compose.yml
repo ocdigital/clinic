@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      MYSQL_DATABASE: clinic
+      MYSQL_ROOT_PASSWORD: clinic2024
+      MYSQL_USER: clinic
+      MYSQL_PASSWORD: password
+      QUEUE_CONNECTION: database
+
+    depends_on:
+      - db
+      - redis
+  db:
+      image: mysql:8.0
+      ports:
+          - "3307:3306"
+      environment:
+          MYSQL_DATABASE: clinic
+          MYSQL_ROOT_PASSWORD: clinic2024
+          MYSQL_USER: clinic
+          MYSQL_PASSWORD: password
+      volumes:
+          - db_data:/var/lib/mysql
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+volumes:
+    db_data:
+

@@ -83,7 +83,7 @@
                 initializeAutocomplete() {
                   $('.js-data-example-ajax').select2({
     ajax: {
-        url: 'http://clinic.local/api/pacientes',
+        url: '/api/pacientes',
         dataType: 'json',
         delay: 250, // Adiciona um pequeno atraso antes de iniciar a pesquisa
         data: function (params) {

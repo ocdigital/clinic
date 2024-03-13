@@ -16,7 +16,7 @@ class WelcomeMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(private string $title, private string  $body)
+    public function __construct(private string $title)
     {
         //
     }
@@ -40,7 +40,7 @@ class WelcomeMail extends Mailable
             view: 'emails.welcome',
             with: [
                 'title' => $this->title,
-                'body' => $this->body,
+
             ],
         );
     }

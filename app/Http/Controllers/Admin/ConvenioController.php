@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Convenio;
 use Illuminate\Http\Request;
 use App\Models\Plano;
+use App\Jobs\ExemploJob;
+use App\Jobs\SendEmailJob;
+use App\Models\User;
 
 class ConvenioController extends Controller
 {
@@ -54,6 +57,9 @@ class ConvenioController extends Controller
         $convenio->nome = $request->nome;
         $convenio->carencia = $request->carencia;
         $convenio->save();
+
+        $user = User::find(1);
+        dispatch(new SendEmailJob($user));
 
         // Salvar os planos associados ao convênio
         $planoNomes = $request->plano_nome;
@@ -121,6 +127,7 @@ class ConvenioController extends Controller
         $convenio->nome = $request->nome;
         $convenio->carencia = $request->carencia;
         $convenio->save();
+
 
         return redirect()->route('admin.convenios.index');
     }

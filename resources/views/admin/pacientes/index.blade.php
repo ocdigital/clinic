@@ -48,9 +48,6 @@
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Telefone</th>
                                             <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                                Email</th>
-                                            <th scope="col"
                                                 class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">
                                                 Editar</th>
                                         </tr>
@@ -76,11 +73,6 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         {{ $paciente->telefone }}
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        {{ $paciente->email }}
                                                     </div>
                                                 </td>
                                                 <td>

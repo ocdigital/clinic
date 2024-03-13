@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-
 use Database\Factories\PacienteFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PacientesTableSeeder extends Seeder
@@ -16,6 +14,6 @@ class PacientesTableSeeder extends Seeder
      */
     public function run()
     {
-       PacienteFactory::new()->count(100)->create();
+        PacienteFactory::new()->count(100)->create();
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\PacienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PacienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +36,3 @@ Route::get('/pacientes', [PacienteController::class, 'apiIndex']);
 // Route::put('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUpdate']);
 // Route::delete('/pacientes/{id}', [App\Http\Controllers\PacienteController::class, 'apiUdestroy']);
 // Route::get('/pacientes/search/{nome}', [App\Http\Controllers\PacienteController::class, 'apiSearch']);
-

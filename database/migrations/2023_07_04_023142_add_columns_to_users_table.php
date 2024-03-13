@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('tipo', ['medico', 'atendente','admin'])->after('email')->nullable();
+            $table->enum('tipo', ['medico', 'atendente', 'admin'])->after('email')->nullable();
             $table->string('profissao')->after('tipo')->nullable();
             $table->string('cbo')->after('profissao')->nullable();
         });
     }
 
-  /**
+    /**
      * Reverse the migrations.
      *
      * @return void

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'email|unique:users,email'
+            'email' => 'email|unique:users,email',
         ]);
 
         try {
@@ -44,6 +44,7 @@ class UserController extends Controller
             $user->fill($request->all());
             $user->password = Hash::make('3221#Edu');
             $user->save();
+
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['message' => $e->getMessage()]);
@@ -55,18 +56,18 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'email|unique:users,email,' . $user->id
+            'email' => 'email|unique:users,email,'.$user->id,
         ]);
 
         try {
             $user->update($request->all());
             $user->save();
+
             return redirect()->route('admin.users.index');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['message' => $e->getMessage()]);
         }
     }
-
 
     public function show(User $user)
     {
@@ -76,8 +77,6 @@ class UserController extends Controller
         return view('admin.users.role', compact('user', 'roles', 'permissions'));
     }
 
-
-
     public function assignRole(Request $request, User $user)
     {
         if ($user->hasRole($request->role)) {
@@ -85,6 +84,7 @@ class UserController extends Controller
         }
 
         $user->assignRole($request->role);
+
         return back();
     }
 
@@ -92,6 +92,7 @@ class UserController extends Controller
     {
         if ($user->hasRole($role)) {
             $user->removeRole($role);
+
             return back()->with('message', 'Role removed.');
         }
 
@@ -104,6 +105,7 @@ class UserController extends Controller
             return back()->with('message', 'Permission exists.');
         }
         $user->givePermissionTo($request->permission);
+
         return back();
     }
 
@@ -111,8 +113,10 @@ class UserController extends Controller
     {
         if ($user->hasPermissionTo($permission)) {
             $user->revokePermissionTo($permission);
+
             return back()->with('message', 'Permission revoked.');
         }
+
         return back()->with('message', 'Permission does not exists.');
     }
 
@@ -125,5 +129,4 @@ class UserController extends Controller
 
         return back();
     }
-
 }

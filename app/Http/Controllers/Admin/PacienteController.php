@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Controller;
+use App\Models\Convenio;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use App\Models\Convenio;
-use App\Http\Controllers\Controller;
 
 class PacienteController extends Controller
 {
@@ -15,14 +14,13 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index(Request $request)
     {
         $query = Paciente::query();
 
         // Filtrar por nome
         if ($request->filled('nome')) {
-            $query->where('nome', 'like', '%' . $request->input('nome') . '%');
+            $query->where('nome', 'like', '%'.$request->input('nome').'%');
         }
 
         // Filtrar por sexo
@@ -32,7 +30,7 @@ class PacienteController extends Controller
 
         // Filtrar por email
         if ($request->filled('email')) {
-            $query->where('email', 'like', '%' . $request->input('email') . '%');
+            $query->where('email', 'like', '%'.$request->input('email').'%');
         }
 
         // Ordenar os resultados
@@ -50,13 +48,12 @@ class PacienteController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $data = Paciente::select("nome as value", "id")
-            ->where('nome', 'LIKE', '%' . $request->get('search') . '%')
+        $data = Paciente::select('nome as value', 'id')
+            ->where('nome', 'LIKE', '%'.$request->get('search').'%')
             ->get();
 
         return response()->json($data);
     }
-
 
     // //retornar todas os pacientes para um endpoint da API
     public function apiIndex(Request $request)
@@ -66,7 +63,7 @@ class PacienteController extends Controller
         $query = Paciente::query();
 
         if ($termoPesquisa) {
-            $query->where('nome', 'LIKE', '%' . $termoPesquisa . '%');
+            $query->where('nome', 'LIKE', '%'.$termoPesquisa.'%');
         }
 
         $pacientes = $query->with('convenio')->get();
@@ -74,35 +71,31 @@ class PacienteController extends Controller
         $select2Data = [];
         foreach ($pacientes as $paciente) {
             $select2Data[] = [
-                'id'            => $paciente->id,
-                'text'          => $paciente->nome,
+                'id' => $paciente->id,
+                'text' => $paciente->nome,
                 'convenio_nome' => optional($paciente->convenio)->nome,
-                'telefone'      => $paciente->telefone,
+                'telefone' => $paciente->telefone,
             ];
         }
 
         return response()->json(['results' => $select2Data]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-    public function create(){
+    public function create()
+    {
         $convenios = Convenio::all();
+
         return view('admin.pacientes.createOrUpdate', compact('convenios'));
     }
-
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     //criar um novo paciente
@@ -128,8 +121,6 @@ class PacienteController extends Controller
         $paciente->convenio_id = $request->convenio_id;
         $paciente->save();
 
-
-
         return redirect()->route('admin.pacientes.index');
 
     }
@@ -143,8 +134,9 @@ class PacienteController extends Controller
     public function show($id)
     {
         // dd('show');
-            $paciente = Paciente::find($id);
-            return view('admin.pacientes.createOrUpdate',compact('paciente'));
+        $paciente = Paciente::find($id);
+
+        return view('admin.pacientes.createOrUpdate', compact('paciente'));
     }
 
     // //retornar um paciente específico para um endpoint da API
@@ -172,15 +164,13 @@ class PacienteController extends Controller
 
         dd($paciente);
 
-        return view('admin.pacientes.createOrUpdate',compact('paciente', 'convenios'));
-
+        return view('admin.pacientes.createOrUpdate', compact('paciente', 'convenios'));
 
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
@@ -188,18 +178,18 @@ class PacienteController extends Controller
     //atualizar um paciente e retroceder para a view de listagem de pacientes
     public function update(Request $request, $id)
     {
-            $paciente = Paciente::find($id);
+        $paciente = Paciente::find($id);
 
-            $paciente->nome = $request->nome;
-            $paciente->data_nascimento = $request->data_nascimento;
-            $paciente->sexo = $request->sexo;
-            $paciente->endereco = $request->endereco;
-            $paciente->telefone = $request->telefone;
-            $paciente->email = $request->email;
-            $paciente->convenio_id = $request->convenio_id;
-            $paciente->save();
+        $paciente->nome = $request->nome;
+        $paciente->data_nascimento = $request->data_nascimento;
+        $paciente->sexo = $request->sexo;
+        $paciente->endereco = $request->endereco;
+        $paciente->telefone = $request->telefone;
+        $paciente->email = $request->email;
+        $paciente->convenio_id = $request->convenio_id;
+        $paciente->save();
 
-            return redirect()->route('admin.pacientes.index');
+        return redirect()->route('admin.pacientes.index');
 
     }
 
@@ -228,7 +218,7 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //retornar para listagem de pacientes
+    //retornar para listagem de pacientes
     public function destroy($id)
     {
         $paciente = Paciente::find($id);
@@ -248,12 +238,12 @@ class PacienteController extends Controller
     //     return response()->json(['message' => 'Paciente deletado com sucesso']);
     // }
 
-//     //criar uma api para buscar um paciente utilizando o typesense
-//     public function apiSearch($nome)
-//     {
-//         $paciente = Paciente::search($nome)->get();
+    //     //criar uma api para buscar um paciente utilizando o typesense
+    //     public function apiSearch($nome)
+    //     {
+    //         $paciente = Paciente::search($nome)->get();
 
-//         return response()->json($paciente);
-//     }
-//
+    //         return response()->json($paciente);
+    //     }
+    //
 }

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -14,9 +13,9 @@ class RoleController extends Controller
     {
         // $roles = Role::whereNotIn('name', ['admin'])->get();
         $roles = Role::all();
+
         // dd($roles);
         return view('admin.roles.index', compact('roles'));
-
 
     }
 
@@ -49,6 +48,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
+
         return view('admin.roles.createOrUpdate', compact('role', 'permissions'));
     }
 
@@ -77,19 +77,22 @@ class RoleController extends Controller
         return redirect()->route('admin.roles.index');
     }
 
-    public function givePermission(Request $request, Role $role){
+    public function givePermission(Request $request, Role $role)
+    {
 
         $role->givePermissionTo($request->permissions);
+
         return redirect()->back();
 
-    //
+        //
 
     }
 
-    public function revokePermission(Role $role, Permission $permission){
+    public function revokePermission(Role $role, Permission $permission)
+    {
 
         $role->revokePermissionTo($permission);
+
         return redirect()->back();
     }
-
 }

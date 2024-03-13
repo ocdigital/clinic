@@ -6,7 +6,7 @@ RUN a2enmod rewrite
 
 RUN docker-php-ext-install pcntl
 # Install necessary PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pcntl pdo_mysql
 
 # Install the GD extension
 RUN apt-get update && \

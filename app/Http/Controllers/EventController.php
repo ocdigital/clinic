@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
     public function index()
     {
         $events = Event::all();
+
         return response()->json($events);
     }
 
     public function agendamentos()
     {
         $agendamentos = Event::paginate(10);
+
         return view('admin.agendamentos.index', compact('agendamentos'));
 
     }
@@ -23,6 +25,7 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::find($id);
+
         return response()->json($event);
     }
 
@@ -37,8 +40,6 @@ class EventController extends Controller
 
         return response()->json($event);
     }
-
-
 
     public function update(Request $request, $id)
     {
@@ -59,5 +60,4 @@ class EventController extends Controller
 
         return response()->json(['message' => 'Event deleted successfully']);
     }
-
 }

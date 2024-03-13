@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Paciente;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Paciente>
@@ -15,7 +15,6 @@ class PacienteFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = Paciente::class;
 
     public function definition()
@@ -28,7 +27,7 @@ class PacienteFactory extends Factory
             'endereco' => $this->faker->address,
             'telefone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
-            'historico_medico' => $this->faker->paragraph
+            'historico_medico' => $this->faker->paragraph,
         ];
     }
 }

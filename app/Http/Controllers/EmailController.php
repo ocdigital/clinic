@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\WelcomeMail;
 use App\Events\EmailSent;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
-    public function sendWelcomeEmail ()
+    public function sendWelcomeEmail()
     {
         $title = 'Welcome to Laravel 8';
         $body = 'This is a test email';

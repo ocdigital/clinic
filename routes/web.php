@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PacienteController;
 use App\Http\Controllers\EmailController;
-
-
-
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/calendar', function () {
     return view('calendar');
@@ -22,10 +19,9 @@ Route::get('/admin', function () {
     return view('admin.index');
 })->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
 
-Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
 
     Route::get('/agendamentos', [App\Http\Controllers\EventController::class, 'agendamentos'])->name('agendamentos.index');
-
 
     Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
     Route::post('/roles/{role}/permissions', [App\Http\Controllers\Admin\RoleController::class, 'givePermission'])->name('roles.permissions');
@@ -51,7 +47,6 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::post('/users/{user}/permissions', [App\Http\Controllers\Admin\UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [App\Http\Controllers\Admin\UserController::class, 'revokePermission'])->name('users.permissions.revoke');
 
-
     /*Pacientes*/
     Route::get('/pacientes', [PacienteController::class, 'index'])->name('pacientes.index');
     Route::get('/pacientes/create', [PacienteController::class, 'create'])->name('pacientes.create');
@@ -61,7 +56,6 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::delete('/pacientes/{id}', [PacienteController::class, 'destroy'])->name('pacientes.destroy');
     //criar novo paciente
 
-
     //rota para chamar a view editar paciente
     Route::get('/pacientes/edit/{id}', [PacienteController::class, 'edit'])->name('pacientes.edit');
 
@@ -69,8 +63,6 @@ Route::middleware(['auth','role:admin'])->name('admin.')->prefix('admin')->group
     Route::resource('/planos', App\Http\Controllers\Admin\PlanoController::class);
 
 });
-
-
 
 Route::get('/', function () {
     return view('dashboard');
@@ -88,13 +80,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/events/{id}', [App\Http\Controllers\EventController::class, 'update']);
     Route::delete('/events/{id}', [App\Http\Controllers\EventController::class, 'destroy']);
 
-
-
-
-
 });
-
-
-
 
 require __DIR__.'/auth.php';

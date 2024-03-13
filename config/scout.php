@@ -139,27 +139,26 @@ return [
         ],
     ],
 
-
     'typesense' => [
-        'api_key'         => 'mo9fi6pOFvjHaKwaFzVvp49ceVefhe08',
-        'nodes'           => [
-          [
-            'host'     => '04y5lxbzkt9pq8imp-1.a1.typesense.net',
-            'port'     => '443',
-            'path'     => '',
-            'protocol' => 'https',
-          ],
+        'api_key' => 'mo9fi6pOFvjHaKwaFzVvp49ceVefhe08',
+        'nodes' => [
+            [
+                'host' => '04y5lxbzkt9pq8imp-1.a1.typesense.net',
+                'port' => '443',
+                'path' => '',
+                'protocol' => 'https',
+            ],
         ],
-        'nearest_node'    => [
-            'host'     => 'localhost',
-            'port'     => '8108',
-            'path'     => '',
+        'nearest_node' => [
+            'host' => 'localhost',
+            'port' => '8108',
+            'path' => '',
             'protocol' => 'http',
         ],
-        'connection_timeout_seconds'   => 2,
-        'healthcheck_interval_seconds' => 30,    
-        'num_retries'                  => 3,
-        'retry_interval_seconds'       => 1,
-      ],
+        'connection_timeout_seconds' => 2,
+        'healthcheck_interval_seconds' => 30,
+        'num_retries' => 3,
+        'retry_interval_seconds' => 1,
+    ],
 
 ];

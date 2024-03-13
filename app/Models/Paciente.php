@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 use Laravel\Scout\Searchable;
+use Typesense\LaravelTypesense\Interfaces\TypesenseDocument;
 
 class Paciente extends Model implements TypesenseDocument
 {
     use HasFactory;
 
     // use Searchable;
-
 
     protected $fillable = [
         'nome',
@@ -22,7 +21,7 @@ class Paciente extends Model implements TypesenseDocument
         'telefone',
         'email',
         'historico_medico',
-        'convenio_id'
+        'convenio_id',
     ];
 
     public function convenio()
@@ -30,7 +29,7 @@ class Paciente extends Model implements TypesenseDocument
         return $this->belongsTo(Convenio::class);
     }
 
-     /**
+    /**
      * Get the indexable data array for the model.
      *
      * @return array
@@ -49,12 +48,11 @@ class Paciente extends Model implements TypesenseDocument
         );
     }
 
-      /**
+    /**
      * The Typesense schema to be created.
-     *
-     * @return array
      */
-    public function getCollectionSchema(): array {
+    public function getCollectionSchema(): array
+    {
         return [
             'nome' => $this->searchableAs(),
             'fields' => [
@@ -75,15 +73,13 @@ class Paciente extends Model implements TypesenseDocument
         ];
     }
 
-       /**
+    /**
      * The fields to be queried against. See https://typesense.org/docs/0.24.0/api/search.html.
-     *
-     * @return array
      */
-    public function typesenseQueryBy(): array {
+    public function typesenseQueryBy(): array
+    {
         return [
             'nome',
         ];
     }
 }
-

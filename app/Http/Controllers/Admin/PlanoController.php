@@ -32,7 +32,6 @@ class PlanoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,14 +43,13 @@ class PlanoController extends Controller
 
         //retorne sucesso para o ajax
         return response()->json([
-            'success' => 'Plano adicionado com sucesso!'
+            'success' => 'Plano adicionado com sucesso!',
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Plano  $plano
      * @return \Illuminate\Http\Response
      */
     public function show(Plano $plano)
@@ -62,7 +60,6 @@ class PlanoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Plano  $plano
      * @return \Illuminate\Http\Response
      */
     public function edit(Plano $plano)
@@ -73,7 +70,6 @@ class PlanoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Plano  $plano
      * @return \Illuminate\Http\Response
      */
@@ -96,13 +92,14 @@ class PlanoController extends Controller
         $planoNomes = $request->plano_nome;
         if ($planoNomes && is_array($planoNomes)) {
             foreach ($planoNomes as $planoId => $planoNome) {
-                if (!empty($planoNome)) {
+                if (! empty($planoNome)) {
                     $plano = Plano::findOrFail($planoId);
                     $plano->nome = $planoNome;
                     $plano->save();
                 }
             }
         }
+
         // Redirecionar de volta à página de edição
         return redirect()
             ->back();
@@ -122,7 +119,7 @@ class PlanoController extends Controller
 
         //retorne sucesso para o ajax
         return response()->json([
-            'success' => 'Plano removido com sucesso!'
+            'success' => 'Plano removido com sucesso!',
         ]);
 
     }

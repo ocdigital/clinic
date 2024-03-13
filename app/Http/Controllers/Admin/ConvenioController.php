@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Convenio;
-use Illuminate\Http\Request;
-use App\Models\Plano;
-use App\Jobs\ExemploJob;
 use App\Jobs\SendEmailJob;
+use App\Models\Convenio;
+use App\Models\Plano;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class ConvenioController extends Controller
 {
@@ -51,7 +50,6 @@ class ConvenioController extends Controller
             'carencia' => 'required',
         ]);
 
-
         $convenio = new Convenio;
         $convenio->registro = $request->registro;
         $convenio->nome = $request->nome;
@@ -65,7 +63,7 @@ class ConvenioController extends Controller
         $planoNomes = $request->plano_nome;
         if ($planoNomes && is_array($planoNomes)) {
             foreach ($planoNomes as $planoNome) {
-                if (!empty($planoNome)) {
+                if (! empty($planoNome)) {
                     $plano = new Plano;
                     $plano->nome = $planoNome;
                     $plano->convenio_id = $convenio->id;
@@ -77,12 +75,9 @@ class ConvenioController extends Controller
         return redirect()->route('admin.convenios.index');
     }
 
-
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Convenio  $convenio
      * @return \Illuminate\Http\Response
      */
     public function show(Convenio $convenio)
@@ -101,9 +96,7 @@ class ConvenioController extends Controller
         $convenio = Convenio::find($id);
         $planos = $convenio->planos;
 
-
-
-        return view('admin.convenios.createOrUpdate',compact('convenio','planos'));
+        return view('admin.convenios.createOrUpdate', compact('convenio', 'planos'));
     }
 
     /**
@@ -128,24 +121,21 @@ class ConvenioController extends Controller
         $convenio->carencia = $request->carencia;
         $convenio->save();
 
-
         return redirect()->route('admin.convenios.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Convenio  $convenio
      * @return \Illuminate\Http\Response
      */
     public function destroy(Convenio $convenio)
     {
-        try{
-        $convenio->delete();
+        try {
+            $convenio->delete();
 
-        return redirect()->route('admin.convenios.index');
-        }
-        catch(\Exception $e){
+            return redirect()->route('admin.convenios.index');
+        } catch (\Exception $e) {
             return redirect()->route('admin.convenios.index')->with('message', 'Não foi possível deletar o convenio, pois existem planos associados a ele!');
         }
 
